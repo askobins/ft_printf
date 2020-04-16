@@ -6,15 +6,16 @@
 /*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:37:09 by askobins          #+#    #+#             */
-/*   Updated: 2020/03/06 20:03:08 by askobins         ###   ########.fr       */
+/*   Updated: 2020/04/16 15:05:19 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft/srcs/libft.h"
 #include <stdarg.h>
 #include <string.h>
 
 #define CONV "" //cspdiuxXnfge%\0
-#define FLAG "" //-0.*#+lh 
+#define FLAG "-+ 0'#"
 
 
 #define CHR 1
@@ -32,45 +33,52 @@
 
 
 #define LFT 0
-#define ZERO 1
+#define ZRO 1
 #define SPC 2
 #define ALT 3
+#define PLS 4
+#define GRP 5
 
-#define LONG 6
-#define LLONG 7
-#define CHINT 8
-#define SHINT 9
+#define LONG 0
+#define LLONG 1
+#define CHINT 2
+#define SHINT 3
 
 size_t	ft_handler(const char *str, va_list vars)
 {
 	const char		*ptr;
-	int				val;
-	unsigned char	opt;
+	unsigned char	flags;
 	size_t			width;
 	size_t			precision;
-	size_t			size;
+	char	length;
 
 	width = 0;
 	ptr = str;
 	while (ft_strchr(FLAG, *(++ptr)))
 	{
 		if (*ptr == '-')
-			opt |= 1 << LFT;
+			flags |= 1 << LFT;
 		if (*ptr == '0')
-			opt |= 1 << ZERO;
+			flags |= 1 << ZRO;
 		if (*ptr == ' ')
-			opt |= 1 << SPC;
+			flags |= 1 << SPC;
 		if (*ptr == '#')
-			opt |= 1 << ALT;
+			flags |= 1 << ALT;
+		if (*ptr == '#')
+			flags |= 1 << PLS;
+		if (*ptr == '#')
+			flags |= 1 << GRP;
 	}
+
 	if (*ptr == '*')
 	{
 		width = va_arg(vars, size_t);
 		ptr++;
 	}
 	else
-		while (ft_isnum(*(ptr++)))
+		while (ft_isdigit(*(ptr++)))
 			width = width * 10 + (*ptr - 48);
+
 	if (*ptr == '.')
 	{
 		if (*(ptr + 1) == '*')
@@ -79,14 +87,28 @@ size_t	ft_handler(const char *str, va_list vars)
 			ptr++;
 		}
 		else
-			while (ft_isnum(*(++ptr)))
+			while (ft_isdigit(*(++ptr)))
 				precision = precision * 10 + (*ptr - 48);
 	}
-	while (*ptr == 'h' || *ptr == 'l')
-	{
 
-		ptr++;
+	if (*ptr == 'h')
+		if (*(ptr + 1) == 'h')
+		{
+			length = 'H';
+			ptr++;
+		}
+		else
+			length = 'h';
+	else if (*ptr == 'l')
+	{
+		if (*(ptr + 1) == 'l')
+		{
+			length = 'L';
+		}
+		else
+			length = 'l';
 	}
+
 	return (ptr - str);
 }
 
@@ -99,8 +121,8 @@ int		ft_printf(const char *str, ...)
 	while ((ptr = ft_strchr(str, '%')))
 	{
 		if (str != ptr)
-			write (1, str, str - ptr);
-		str += ft_handler(str, vars);
+			write(1, str, ptr - str);
+		str = ptr + ft_handler(str, vars);
 	}
 	ft_putstr(str);
 	va_end(vars);
