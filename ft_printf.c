@@ -6,116 +6,27 @@
 /*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:37:09 by askobins          #+#    #+#             */
-/*   Updated: 2020/04/18 20:30:31 by askobins         ###   ########.fr       */
+/*   Updated: 2020/04/29 11:46:07 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/srcs/libft.h"
-#include <stdarg.h>
-#include <string.h>
+#include "libprintf.h"
 
-#define CONV "cspdiuxXnfge%\0"
 #define FLAG "-+ 0'#"
+#define NOSIGN "iopuxX"
+#define DOUBLE "aefgAEFG"
+
+#define MCHR 0x0000000fUL
+#define MSHT 0x000000ffUL
+#define MINT 0x0000ffffUL
+#define MLNG 0xffffffffUL
 
 
-#define CHR 1
-#define STR 2
-#define PTR 3
-#define INT 4
-#define UINT 5
-#define HEX 6
-#define CHEX 7
-#define NOT 8
-#define FFLOAT 9
-#define EFLOAT 10
-#define AFLOAT 11
-#define MOD 12
-
-
-#define LFT 0
-#define ZRO 1
-#define SPC 2
-#define ALT 3
-#define PLS 4
-#define GRP 5
-
-#define LONG 0
-#define LLONG 1
-#define CHINT 2
-#define SHINT 3
-
-/*size_t	ft_handler(const char **str, va_list vars)
-  {
-  const char		*ptr;
-  unsigned char	flags;
-  size_t			width;
-  size_t			precision;
-  char	length;
-
-  width = 0;
-  ptr = str;
-  while (ft_strchr(FLAG, *(++ptr)))
-  {
-  if (*ptr == '-')
-  flags |= 1 << LFT;
-  if (*ptr == '0')
-  flags |= 1 << ZRO;
-  if (*ptr == ' ')
-  flags |= 1 << SPC;
-  if (*ptr == '#')
-  flags |= 1 << ALT;
-  if (*ptr == '#')
-  flags |= 1 << PLS;
-  if (*ptr == '#')
-  flags |= 1 << GRP;
-  }
-
-  if (*ptr == '*')
-  {
-  width = va_arg(vars, size_t);
-  ptr++;
-  }
-  else
-  while (ft_isdigit(*(ptr++)))
-  width = width * 10 + (*ptr - 48);
-
-  if (*ptr == '.')
-  {
-  if (*(ptr + 1) == '*')
-  {
-  precision = va_arg(vars, size_t);
-  ptr++;
-  }
-  else
-  while (ft_isdigit(*(++ptr)))
-  precision = precision * 10 + (*ptr - 48);
-  }
-
-  if (*ptr == 'h')
-  if (*(ptr + 1) == 'h')
-  {
-  length = 'H';
-  ptr++;
-  }
-  else
-  length = 'h';
-  else if (*ptr == 'l')
-  {
-  if (*(ptr + 1) == 'l')
-  {
-  length = 'L';
-  }
-  else
-  length = 'l';
-  }
-
-  return (0);
-
-  }*/
-
-unsigned char ft_flags(const char **str)
+unsigned char g_flags(const char **str)
 {
 	unsigned char flags;
+
+	flags = 0;
 	while (ft_strchr(FLAG, **str))
 	{
 		if (**str == '-')
@@ -126,79 +37,82 @@ unsigned char ft_flags(const char **str)
 			flags |= 1 << SPC;
 		if (**str == '#')
 			flags |= 1 << ALT;
-		if (**str == '#')
+		if (**str == '+')
 			flags |= 1 << PLS;
-		if (**str == '#')
+		if (**str == '\'')
 			flags |= 1 << GRP;
 	}
 	return (flags);
 }
 
-size_t	*ft_numbers(const char **str, va_list vars)
+size_t	*g_numbers(const char **str, va_list vars, unsigned char *flags)
 {
-	size_t	pw[2];
+	size_t	wp[2];
 	size_t	*cpy;
 
-	pw[0] = 0;
-	pw[1] = 0;
+	wp[0] = 0;
+	wp[1] = 0;
 	if (**str == '*')
-{
-	pw[0] = va_arg(vars, size_t);
-	(*str)++;
-}
-	else
-while (ft_isdigit(*((*str)++)))
-	pw[0] = pw[0] * 10 + (**str - 48);
-	if (**str == '.')
-	if (*(*str + 1) == '*')
-{
-	pw[1] = va_arg(vars, size_t);
-	(*str)++;
-}
-	else if (ft_isdigit(*((*str) + 1)))
-while (ft_isdigit(*(++(*str))))
-	pw[1] = pw[1] * 10 + (**str - 48);
-	else
-	pw[1] = ~0UL;
-	return ((cpy = pw));
+	{
+		wp[0] = va_arg(vars, size_t);
+		(*str)++;
 	}
-
-unsigned char	ft_length(const char **str)
-{
-	unsigned char	length;
-
-	if (**str == 'h')
-		if (*(*str + 1) == 'h')
+	else
+		while (ft_isdigit(*((*str)++)))
+			wp[0] = wp[0] * 10 + (**str - '0');
+	if (*flags |= (**str == '.') << PRE)
+		if (*(*str + 1) == '*')
 		{
-			length = 'H';
-			ptr++;
+			wp[1] = va_arg(vars, size_t);
+			(*str)++;
 		}
 		else
-			length = 'h';
+			while (ft_isdigit(*(++(*str))))
+				wp[1] = wp[1] * 10 + (**str - '0');
+	return ((cpy = wp));
+}
+
+unsigned long	g_length(const char **str)
+{
+	unsigned long	mask;
+
+	mask = MINT;
+	if (**str == 'h')
+	{
+		if (*(*str + 1) == 'h')
+		{
+			mask = MCHR;
+			(*str)++;
+		}
+		else
+			mask = MSHT;
+	}
 	else if (**str == 'l')
 	{
 		if (*(*str + 1) == 'l')
-		{
-			length = 'L';
-		}
-		else
-			length = 'l';
+			(*str)++;
+		mask = MLNG;
 	}
-	return (length);
+	return (mask);
 }
 
-void			ft_handler(const char **str, va_list vars)
+void			handle(const char **str, va_list vars)
 {
 	unsigned char	flags;
-	size_t			*pw;
-	unsigned char	length;
+	size_t			*wp;
+	unsigned long	mask;
 
-	flags = ft_flags(str);
-	pw = ft_numbers(str, vars);
-	length = ft_length(str);
-	if (**str == '%' || **str == 'c')
-		ft_char(**str, vars);
+	flags = g_flags(str);
+	wp = g_numbers(str, vars, &flags);
+	mask = g_length(str);
+	if (**str == '%' && !flags && !wp[0] && wp[1] == ~0UL && mask == MINT)
+		write(1, *str, 1);
+	else if (**str == 'c')
+		p_char(va_arg(vars, char), flags, wp[0]);
 	else if (**str == 's')
+		p_string(va_arg(vars, char *), flags, wp);
+	else if (**str == 'd' || **str == 'i')
+		p_int((va_arg(vars, long long)) & mask, flags, wp);
 
 }
 
@@ -213,7 +127,7 @@ int				ft_printf(const char *str, ...)
 		if (str != ptr)
 			write(1, str, ptr - str);
 		str = ptr;
-		ft_handler(&str, vars);
+		handle(&str, vars);
 	}
 	ft_putstr(str);
 	va_end(vars);
