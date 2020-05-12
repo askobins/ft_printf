@@ -6,7 +6,7 @@
 /*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:37:09 by askobins          #+#    #+#             */
-/*   Updated: 2020/04/29 11:46:07 by askobins         ###   ########.fr       */
+/*   Updated: 2020/05/10 15:17:54 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 #define NOSIGN "iopuxX"
 #define DOUBLE "aefgAEFG"
 
-#define MCHR 0x0000000fUL
-#define MSHT 0x000000ffUL
-#define MINT 0x0000ffffUL
-#define MLNG 0xffffffffUL
+#define MCHR 0x00000000000000ffUL
+#define MSHT 0x000000000000ffffUL
+#define MINT 0x00000000ffffffffUL
+#define MLNG 0xffffffffffffffffUL
 
 
-unsigned char g_flags(const char **str)
+static unsigned char g_flags(const char **str)
 {
 	unsigned char flags;
 
@@ -45,7 +45,7 @@ unsigned char g_flags(const char **str)
 	return (flags);
 }
 
-size_t	*g_numbers(const char **str, va_list vars, unsigned char *flags)
+static size_t	*g_numbers(const char **str, va_list vars, unsigned char *flags)
 {
 	size_t	wp[2];
 	size_t	*cpy;
@@ -72,7 +72,7 @@ size_t	*g_numbers(const char **str, va_list vars, unsigned char *flags)
 	return ((cpy = wp));
 }
 
-unsigned long	g_length(const char **str)
+static unsigned long	g_length(const char **str)
 {
 	unsigned long	mask;
 
@@ -96,7 +96,7 @@ unsigned long	g_length(const char **str)
 	return (mask);
 }
 
-void			handle(const char **str, va_list vars)
+static void			handle(const char **str, va_list vars)
 {
 	unsigned char	flags;
 	size_t			*wp;
@@ -112,7 +112,7 @@ void			handle(const char **str, va_list vars)
 	else if (**str == 's')
 		p_string(va_arg(vars, char *), flags, wp);
 	else if (**str == 'd' || **str == 'i')
-		p_int((va_arg(vars, long long)) & mask, flags, wp);
+		p_itypes(h_mask(va_arg(vars, long long), mask), flags, wp);
 
 }
 
