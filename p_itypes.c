@@ -6,29 +6,31 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/22 01:14:04 by askobins          #+#    #+#             */
-/*   Updated: 2020/05/12 14:23:24 by askobins         ###   ########.fr       */
+/*   Updated: 2020/05/15 20:35:08 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libprintf.h"
 
-void			p_int(long long nb, unsigned char flags, size_t *wp)
+void			p_int(t_llong nb, t_uchar flags, size_t *wp)
 {
-	unsigned int	len;
-	size_t			width;
-	size_t			precision;
+	t_uint	len;
+	char	sign;
 
-	len = h_numlen(nb, 10);
-	precision = wp[1] * !!(flags & (1 << PRE)) > len ? wp[1] - len : 0;
-	width = wp[0] > len + !!(flags & (1 << PLS)) + precision ?
-		wp[0] - len - !!(flags & (1 << PLS)) - precision : 0;
-	if (width && !(flags & (1 << LFT)))
-		h_align(width, flags & (1 << ZRO) && !(flags & (1 << PRE)) ? '0' : ' ');
-	if (flags & (1 << PLS) || flags & (1 << SPC))
-		write(1, flags & (1 << PLS) ? "+" : " ", 1);
-	if (flags & (1 << PRE))
-		h_align(precision, '0');
-	ft_putlong(nb);
+	sign = 0;
+	if (!(sign = '-' * (nb < 0)) && (flags & (1 << PLS) || flags & (1 << SPC)))
+		sign = (flags & (1 << PLS) ? '+' : ' ');
+	len = h_numlen(ft_abs(nb), 10);
+	wp[1] = flags & (1 << ZRO) && !(flags & (1 << LFT)) && wp[0] - !!sign >
+		wp[1] * !!(flags & (1 << PRE)) ? h_usub(wp[0], len + !!sign) :
+		h_usub(wp[1] * !!(flags & (1 << PRE)), len);
+	wp[0] = h_usub(wp[0], len + !!sign);
+	if (!(flags & (1 << LFT)) && !(flags & (1 << ZRO)))
+		h_align(wp[0], ' ');
+	if (sign)
+		write(1, &sign, 1);
+	h_align(wp[1], '0');
+	ft_putlong(ft_abs(nb));
 	if (flags & (1 << LFT))
-		h_align(width, ' ');
+		h_align(wp[0], ' ');
 }

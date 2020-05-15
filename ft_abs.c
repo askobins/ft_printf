@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_is.c                                            :+:      :+:    :+:   */
+/*   ft_abs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:20:02 by askobins          #+#    #+#             */
-/*   Updated: 2020/05/12 16:13:56 by askobins         ###   ########.fr       */
+/*   Created: 2020/05/15 18:24:45 by askobins          #+#    #+#             */
+/*   Updated: 2020/05/15 18:38:30 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libprintf.h"
 
-static int		ft_isalpha(int c)
+t_ullong	ft_abs(t_llong nb)
 {
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
-}
-
-int				ft_isdigit(int c)
-{
-	return (c >= '0' && c <= '9');
-}
-
-int				ft_isalnum(int c)
-{
-	return ((ft_isalpha(c)) || (ft_isdigit(c)));
+	return (nb > 0 ? (t_ullong)nb : (t_ullong)-nb);
 }

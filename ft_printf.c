@@ -6,7 +6,7 @@
 /*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:37:09 by askobins          #+#    #+#             */
-/*   Updated: 2020/05/10 15:17:54 by askobins         ###   ########.fr       */
+/*   Updated: 2020/05/15 18:48:20 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@
 #define MINT 0x00000000ffffffffUL
 #define MLNG 0xffffffffffffffffUL
 
-
-static unsigned char g_flags(const char **str)
+static t_uchar	g_flags(const char **str)
 {
-	unsigned char flags;
+	t_uchar flags;
 
 	flags = 0;
 	while (ft_strchr(FLAG, **str))
@@ -45,7 +44,7 @@ static unsigned char g_flags(const char **str)
 	return (flags);
 }
 
-static size_t	*g_numbers(const char **str, va_list vars, unsigned char *flags)
+static size_t	*g_numbers(const char **str, va_list vars, t_uchar *flags)
 {
 	size_t	wp[2];
 	size_t	*cpy;
@@ -72,9 +71,9 @@ static size_t	*g_numbers(const char **str, va_list vars, unsigned char *flags)
 	return ((cpy = wp));
 }
 
-static unsigned long	g_length(const char **str)
+static t_ulong	g_length(const char **str)
 {
-	unsigned long	mask;
+	t_ulong	mask;
 
 	mask = MINT;
 	if (**str == 'h')
@@ -96,11 +95,11 @@ static unsigned long	g_length(const char **str)
 	return (mask);
 }
 
-static void			handle(const char **str, va_list vars)
+static void		handle(const char **str, va_list vars)
 {
-	unsigned char	flags;
-	size_t			*wp;
-	unsigned long	mask;
+	t_uchar	flags;
+	size_t	*wp;
+	t_ulong	mask;
 
 	flags = g_flags(str);
 	wp = g_numbers(str, vars, &flags);
@@ -113,7 +112,6 @@ static void			handle(const char **str, va_list vars)
 		p_string(va_arg(vars, char *), flags, wp);
 	else if (**str == 'd' || **str == 'i')
 		p_itypes(h_mask(va_arg(vars, long long), mask), flags, wp);
-
 }
 
 int				ft_printf(const char *str, ...)
