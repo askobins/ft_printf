@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/21 16:18:31 by askobins          #+#    #+#             */
-/*   Updated: 2020/05/15 18:45:58 by askobins         ###   ########.fr       */
+/*   Updated: 2020/05/16 21:31:12 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ long long	h_mask(t_llong nb, t_llong mask)
 	return (nb > 0 ? nb & mask : nb | ~mask);
 }
 
-int			h_numlen(t_ullong nb, int base)
+t_uint		h_numlen(t_ullong nb, int base)
 {
-	int		len;
+	t_uint		len;
 
 	while (nb /= base)
 		len++;

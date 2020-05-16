@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 16:15:19 by askobins          #+#    #+#             */
-/*   Updated: 2020/05/15 20:21:11 by askobins         ###   ########.fr       */
+/*   Updated: 2020/05/16 21:29:37 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,34 +39,39 @@ typedef unsigned long		t_ulong;
 
 typedef unsigned long long	t_ullong;
 
-size_t		ft_strlen(const char *str);
+typedef union {
+	double		nb;
+	t_ullong	bits;
+}				t_conv;
 
-char		*ft_strchr(const char *str, int c);
+size_t			ft_strlen(const char *str);
 
-int			ft_isdigit(int c);
+char			*ft_strchr(const char *str, int c);
 
-int			ft_isalnum(int c);
+int				ft_isdigit(int c);
 
-void		ft_putlong(t_ullong nb);
+int				ft_isalnum(int c);
 
-void		ft_putchar(char c);
+void			ft_putlong(t_ullong nb);
 
-void		ft_putstr(char const *str);
+void			ft_putchar(char c);
 
-t_ullong	ft_abs(t_llong nb);
+void			ft_putstr(char const *str);
 
-void		h_align(size_t size, char c);
+t_ullong		ft_abs(t_llong nb);
 
-t_llong		h_mask(t_llong nb, t_llong mask);
+void			h_align(size_t size, char c);
 
-t_ullong	h_usub(t_ullong a, t_ullong b);
+t_llong			h_mask(t_llong nb, t_llong mask);
 
-int			h_numlen(t_ullong nb, int base);
+t_ullong		h_usub(t_ullong a, t_ullong b);
 
-void		p_itypes(t_llong nb, t_uchar flags, size_t *wp);
+t_uint			h_numlen(t_ullong nb, int base);
 
-void		p_char(const char c, t_uchar flags, size_t w);
+void			p_itypes(t_llong nb, t_uchar flags, size_t *wp);
 
-void		p_string(const char *str, t_uchar flags, size_t *wp);
+void			p_char(const char c, t_uchar flags, size_t w);
+
+void			p_string(const char *str, t_uchar flags, size_t *wp);
 
 #endif
