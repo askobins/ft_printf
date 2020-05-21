@@ -6,7 +6,7 @@
 /*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:37:09 by askobins          #+#    #+#             */
-/*   Updated: 2020/05/15 18:48:20 by askobins         ###   ########.fr       */
+/*   Updated: 2020/05/21 13:18:52 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static t_ulong	g_length(const char **str)
 	return (mask);
 }
 
-static void		handle(const char **str, va_list vars)
+static size_t	handle(const char **str, va_list vars)
 {
 	t_uchar	flags;
 	size_t	*wp;
@@ -105,29 +105,32 @@ static void		handle(const char **str, va_list vars)
 	wp = g_numbers(str, vars, &flags);
 	mask = g_length(str);
 	if (**str == '%' && !flags && !wp[0] && wp[1] == ~0UL && mask == MINT)
-		write(1, *str, 1);
-	else if (**str == 'c')
-		p_char(va_arg(vars, char), flags, wp[0]);
-	else if (**str == 's')
-		p_string(va_arg(vars, char *), flags, wp);
-	else if (**str == 'd' || **str == 'i')
-		p_itypes(h_mask(va_arg(vars, long long), mask), flags, wp);
+		return (write(1, *str, 1));
+	if (**str == 'c')
+		return (p_char(va_arg(vars, char), flags, wp[0]));
+	if (**str == 's')
+		return (p_string(va_arg(vars, char *), flags, wp));
+	if (**str == 'd' || **str == 'i')
+		return (p_itypes(h_mask(va_arg(vars, long long), mask), flags, wp));
 }
 
-int				ft_printf(const char *str, ...)
+ssize_t			ft_printf(const char *str, ...)
 {
 	va_list		vars;
 	char		*ptr;
+	ssize_t		ret;
 
 	va_start(vars, str);
+	ret = 0;
 	while ((ptr = ft_strchr(str, '%')))
 	{
 		if (str != ptr)
-			write(1, str, ptr - str);
+			ret += write(1, str, ptr - str);
 		str = ptr;
-		handle(&str, vars);
+		ret += handle(&str, vars);
 	}
+	ret += ft_strlen(str);
 	ft_putstr(str);
 	va_end(vars);
-	return (0);
+	return (ret);
 }

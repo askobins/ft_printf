@@ -6,13 +6,13 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/22 01:14:04 by askobins          #+#    #+#             */
-/*   Updated: 2020/05/16 18:28:26 by askobins         ###   ########.fr       */
+/*   Updated: 2020/05/21 12:55:45 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libprintf.h"
 
-void			p_int(t_llong nb, t_uchar flags, size_t *wp)
+size_t	p_int(t_llong nb, t_uchar flags, size_t *wp)
 {
 	t_uint	len;
 	char	sign;
@@ -24,7 +24,7 @@ void			p_int(t_llong nb, t_uchar flags, size_t *wp)
 	wp[1] = flags & (1 << ZRO) && !(flags & (1 << LFT)) && wp[0] - !!sign >
 		wp[1] * !!(flags & (1 << PRE)) ? h_usub(wp[0], len + !!sign) :
 		h_usub(wp[1] * !!(flags & (1 << PRE)), len);
-	wp[0] = h_usub(wp[0], len + !!sign);
+	wp[0] = h_usub(wp[0], wp[1] + len + !!sign);
 	if (!(flags & (1 << LFT)) && !(flags & (1 << ZRO)))
 		h_align(wp[0], ' ');
 	if (sign)
@@ -33,4 +33,5 @@ void			p_int(t_llong nb, t_uchar flags, size_t *wp)
 	ft_putlong(ft_abs(nb));
 	if (flags & (1 << LFT))
 		h_align(wp[0], ' ');
+	return (wp[0] + wp[1] + len + !!sign);
 }

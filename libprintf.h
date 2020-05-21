@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 16:15:19 by askobins          #+#    #+#             */
-/*   Updated: 2020/05/16 21:29:37 by askobins         ###   ########.fr       */
+/*   Updated: 2020/05/21 13:16:56 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,14 @@ t_ullong		h_usub(t_ullong a, t_ullong b);
 
 t_uint			h_numlen(t_ullong nb, int base);
 
-void			p_itypes(t_llong nb, t_uchar flags, size_t *wp);
+int				is_inf(double nb);
 
-void			p_char(const char c, t_uchar flags, size_t w);
+size_t			put_inf_nan(double nb, t_uchar flags, size_t w);
 
-void			p_string(const char *str, t_uchar flags, size_t *wp);
+size_t			p_itypes(t_llong nb, t_uchar flags, size_t *wp);
+
+size_t			p_char(const char c, t_uchar flags, size_t w);
+
+size_t			p_string(const char *str, t_uchar flags, size_t *wp);
 
 #endif
