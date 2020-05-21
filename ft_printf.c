@@ -6,7 +6,7 @@
 /*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:37:09 by askobins          #+#    #+#             */
-/*   Updated: 2020/05/21 13:18:52 by askobins         ###   ########.fr       */
+/*   Updated: 2020/05/21 13:33:14 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,11 @@ static size_t	handle(const char **str, va_list vars)
 		return (p_itypes(h_mask(va_arg(vars, long long), mask), flags, wp));
 }
 
-ssize_t			ft_printf(const char *str, ...)
+int			ft_printf(const char *str, ...)
 {
 	va_list		vars;
 	char		*ptr;
-	ssize_t		ret;
+	int			ret;
 
 	va_start(vars, str);
 	ret = 0;
