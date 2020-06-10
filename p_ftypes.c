@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 14:04:49 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/10 20:29:22 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/10 23:11:04 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,31 @@ static size_t	put_precision(double nb, size_t p)
 			((total - size) * !g_flags.ext));
 }
 
+static size_t	put_inf_nan(double nb, size_t w)
+{
+	t_floatlong		u;
+	char			neg;
+
+	u.nb = nb;
+	neg = '-' * !!(u.raw & (1ULL << 63));
+	if (!g_flags.lft)
+		h_align(h_usub(w, 3 + !!neg), ' ');
+	if (neg)
+		write(1, &neg, 1);
+	if (nb == nb)
+		write(1, g_flags.cap ? "NAN" : "nan", 3);
+	else
+		write(1, g_flags.cap ? "INF" : "inf", 3);
+	if (g_flags.lft)
+		h_align(h_usub(w, 3 + !!neg), ' ');
+	return (w ? w : 3 + !!neg);
+}
+
 static size_t	p_float_normal(double nb, size_t *wp)
 {
 	size_t	len;
 	char	sign;
 
-	if (nb != nb || is_inf(nb))
-		return (put_inf_nan(nb, wp[0]));
 	if (!(sign = '-' * (nb < 0)) && (g_flags.pls || g_flags.spc))
 		sign = (g_flags.pls ? '+' : ' ');
 	len = h_numlen(ft_abs(nb), 10);
@@ -69,8 +87,6 @@ static size_t	p_float_scient(double nb, size_t *wp)
 	t_uint	exp;
 	t_floatlong	u;
 
-	if (nb != nb || is_inf(nb))
-		return(put_inf_nan(nb, wp[0]));
 	e[0] = g_flags.cap ? 'E' : 'e';
 	e[1] = nb < 1 ? '-' : '+';
 	u.nb = nb;
@@ -84,15 +100,16 @@ static size_t	p_float_scient(double nb, size_t *wp)
 	return (len + 2 + h_numlen(exp, 10) + (ft_abs(nb) < 10));
 }
 
-size_t			p_ftypes(double nb, size_t *wp)
+size_t			p_float(double nb, size_t *wp)
 {
 	int exp;
 	t_floatlong u;
 
-
+	u.nb = nb;
+	if (nb != nb || (u.raw & (-1ULL >> 1) >= MSK << 52))
+		return (put_inf_nan(nb, wp[1]));
 	if (g_flags.ext)
 	{
-		u.nb = nb;
 		exp = ((int)((u.raw >> 52 & MSK) - 1023) * LOG) - (nb < 1 && nb > -1);
 		if (exp < wp[1] && exp >= -4)
 		{

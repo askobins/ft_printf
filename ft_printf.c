@@ -6,7 +6,7 @@
 /*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:37:09 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/10 21:11:53 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/10 23:27:18 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,14 +117,14 @@ static size_t	handle(const char **str, va_list vars)
 	if (**str == 's')
 		return (p_string(va_arg(vars, char *), wp));
 	if (**str == 'd' || **str == 'i')
-		return (p_itypes(h_mask(va_arg(vars, t_llong), mask), wp));
-	if ft_strchr(CAPS, **str)
+		return (p_int(va_arg(vars, t_llong), wp, mask));
+	if (ft_strchr(CAPS, **str))
 		g_flags.cap = 1;
 	if (ft_strchr(DOUBLE, **str))
 	{
 		g_flags.ext = (**str == 'g' || **str == 'G');
 		g_flags.pre = (**str == 'e' || **str == 'E');
-		return (p_ftypes(va_arg(vars, double), wp));
+		return (p_float(va_arg(vars, double), wp));
 	}
 }
 
@@ -144,7 +144,7 @@ int				ft_printf(const char *str, ...)
 		ret += handle(&str, vars);
 	}
 	ret += ft_strlen(str);
-	ft_putstr(str);
+	write(1, str, ft_strlen(str));
 	va_end(vars);
 	return (ret);
 }

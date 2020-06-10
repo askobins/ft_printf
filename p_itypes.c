@@ -6,17 +6,18 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/22 01:14:04 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/10 15:59:59 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/10 23:15:36 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libprintf.h"
 
-size_t	p_int(t_llong nb, size_t *wp)
+size_t	p_int(t_llong nb, size_t *wp, t_ullong mask)
 {
 	t_uint	len;
 	char	sign;
 
+	nb = nb >= 0 ? nb & mask : nb | ~mask;
 	sign = 0;
 	if (!(sign = '-' * (nb < 0)) && g_flags.pls || g_flags.spc)
 		sign = (g_flags.pls ? '+' : ' ');

@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/21 16:18:31 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/10 00:25:41 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/10 23:29:17 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,6 @@ void				h_align(size_t size, char c)
 		write(1, &c, 1);
 		size--;
 	}
-}
-
-inline t_llong		h_mask(t_llong nb, t_ullong mask)
-{
-	return (nb > 0 ? nb & mask : nb | ~mask);
 }
 
 inline t_uint		h_numlen(t_ullong nb, int base)
