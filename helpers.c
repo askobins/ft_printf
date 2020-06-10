@@ -6,28 +6,28 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/21 16:18:31 by askobins          #+#    #+#             */
-/*   Updated: 2020/05/16 21:31:12 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/10 00:25:41 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libprintf.h"
 
-void		h_align(size_t size, char c)
+void				h_align(size_t size, char c)
 {
-	t_ulong	tmp;
+	t_ullong	tmp;
 
 	tmp = LO * c;
-	while (size / 8)
+	while (size >= 8)
 	{
 		write(1, &tmp, 8);
 		size -= 8;
 	}
-	if (size / 4)
+	if (size >= 4)
 	{
 		write(1, &tmp, 4);
 		size -= 4;
 	}
-	if (size / 2)
+	if (size >= 2)
 	{
 		write(1, &tmp, 2);
 		size -= 2;
@@ -39,12 +39,12 @@ void		h_align(size_t size, char c)
 	}
 }
 
-long long	h_mask(t_llong nb, t_llong mask)
+inline t_llong		h_mask(t_llong nb, t_ullong mask)
 {
 	return (nb > 0 ? nb & mask : nb | ~mask);
 }
 
-t_uint		h_numlen(t_ullong nb, int base)
+inline t_uint		h_numlen(t_ullong nb, int base)
 {
 	t_uint		len;
 
@@ -53,7 +53,7 @@ t_uint		h_numlen(t_ullong nb, int base)
 	return (len);
 }
 
-t_ullong	h_usub(t_ullong a, t_ullong b)
+inline t_ullong		h_usub(t_ullong a, t_ullong b)
 {
-	return (a > b ? a - b : 0);
+	return ((a - b) * (a > b));
 }

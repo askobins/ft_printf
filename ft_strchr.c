@@ -6,7 +6,7 @@
 /*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 12:40:34 by askobins          #+#    #+#             */
-/*   Updated: 2020/05/15 18:44:16 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/03 17:04:42 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ char	*ft_strchr(const char *str, int c)
 {
 	if (!str)
 		return (NULL);
-	while (*str && *str != c && (t_ulong)str & 7)
+	while (*str && *str != c && (t_ullong)str & 7)
 		str++;
-	while (!(((t_ulong)str) - LO & ~((t_ulong)str) & HI) &&
-			!((((t_ulong)str) ^ LO * (c)) - LO
-				& ~(((t_ulong)str) ^ LO * (c)) & HI))
+	while (!(((t_ullong)str) - LO & ~((t_ullong)str) & HI) &&
+			!((((t_ullong)str) ^ LO * (c)) - LO
+				& ~(((t_ullong)str) ^ LO * (c)) & HI))
 		str += 8;
 	while (*str && *str != c)
 		str++;
