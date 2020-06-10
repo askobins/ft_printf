@@ -6,15 +6,16 @@
 /*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:37:09 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/10 16:08:03 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/10 21:10:06 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libprintf.h"
 
 #define FLAG   "-+ 0#"
-#define NOSIGN "iopuxX"
-#define DOUBLE "aefgAEFG"
+#define NOSIGN "aiopuxAX"
+#define DOUBLE "efgEFG"
+#define CAPS   "AEFGX"
 
 #define MCHR UCHAR_MAX
 #define MSHT USHRT_MAX
@@ -32,13 +33,13 @@ static void		flags(const char **str)
 	{
 		if (**str == '-')
 			g_flags.lft = 1;
-		if (**str == '0')
+		else if (**str == '0')
 			g_flags.zro = 1;
-		if (**str == ' ')
+		else if (**str == ' ')
 			g_flags.spc = 1;
-		if (**str == '#')
+		else if (**str == '#')
 			g_flags.alt = 1;
-		if (**str == '+')
+		else if (**str == '+')
 			g_flags.pls = 1;
 	}
 }
@@ -116,6 +117,14 @@ static size_t	handle(const char **str, va_list vars)
 		return (p_string(va_arg(vars, char *), wp));
 	if (**str == 'd' || **str == 'i')
 		return (p_itypes(h_mask(va_arg(vars, t_llong), mask), wp));
+	if ft_strchr(CAPS, **str)
+		g_flags.cap = 1;
+	if (ft_strchr(DOUBLE, **str))
+	{
+		g_flags.ext = (**str == 'g' || **str == 'G');
+		g_flags.pre = (**str == 'e' || **str == 'E');
+		return (p_ftypes(va_arg(vars, double), wp));
+	}
 }
 
 int				ft_printf(const char *str, ...)
