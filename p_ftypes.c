@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 14:04:49 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/10 15:59:39 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/10 17:39:53 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,13 @@ static void	put_precision(double nb, size_t p)
 	size = p - 1;
 	while (--p)
 		precision = (precision * 10) + ((nb - (long)nb) * 10);
-	write(1, ".", 1);
+	if (precision || g_flags.alt)
+		write(1, ".", 1);
 	h_align(size - (!!precision * h_numlen(precision, 10)), '0');
 	if (precision)
 		ft_putlong(precision, 10, B10SET);
-	h_align(total - size, 0);
+	if (!g_flags.ext)
+		h_align(total - size, 0);
 }
 
 size_t		p_float_normal(double nb, size_t *wp)
@@ -51,7 +53,7 @@ size_t		p_float_normal(double nb, size_t *wp)
 		write(1, &sign, 1);
 	if (g_flags.zro && !g_flags.lft)
 		h_align(wp[0], '0');
-	ft_putlong(ft_abs(nb)), 10, B10SET;
+	ft_putlong(ft_abs(nb), 10, B10SET);
 	put_precision(nb, wp[1]);
 	if (g_flags.lft)
 		h_align(wp[0], ' ');
@@ -85,8 +87,7 @@ size_t		p_float_scient(double nb, size_t *wp)
 #define DFAC 4503599627370496
 
 
-size_t		p_float_choose(double nb, t_uchar g_flags, size_t *wp)
+size_t		p_float_choose(double nb, size_t *wp)
 {
-	size_t	precision;
-	double	cpy;
+	
 }
