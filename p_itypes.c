@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/22 01:14:04 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/10 00:06:53 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/10 15:59:59 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ size_t	p_int(t_llong nb, size_t *wp)
 	if (sign)
 		write(1, &sign, 1);
 	h_align(wp[1], '0');
-	ft_putlong(ft_abs(nb));
+	ft_putlong(ft_abs(nb), 10, B10SET);
 	if (g_flags.lft)
 		h_align(wp[0], ' ');
 	return (wp[0] + wp[1] + len + !!sign);

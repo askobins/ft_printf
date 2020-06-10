@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 12:34:32 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/10 00:24:51 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/10 16:00:53 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void	ft_putstr(char const *str)
 		write(1, str, ft_strlen(str));
 }
 
-void	ft_putlong(t_ullong nb)
+void	ft_putlong(t_ullong nb, t_uint base, const char *charset)
 {
-	if (nb > 9)
-		ft_putlong(nb / 10);
-	ft_putchar((nb % 10) + '0');
+	if (nb > base - 1)
+		ft_putlong(nb / base, base, charset);
+	ft_putchar(charset[nb % base]);
 }
 
 size_t	put_inf_nan(double nb, size_t w)

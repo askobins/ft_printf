@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 16:15:19 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/10 00:24:25 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/10 16:01:09 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,11 @@
 # define LO 0x0101010101010101ULL
 # define HI 0x8080808080808080ULL
 
-# define LFT 0
-# define ZRO 1
-# define SPC 2
-# define ALT 3
-# define PLS 4
-# define PRE 5
-# define CAP 6
-# define EXT 7
+# define B2SET "01"
+# define B10SET "0123456789"
+# define B16SETLO "0123456789abcdef"
+# define B16SETHI "0123456789ABCDEF"
+
 
 typedef long long			t_llong;
 
@@ -70,7 +67,7 @@ int				ft_isdigit(int c);
 
 int				ft_isalnum(int c);
 
-void			ft_putlong(t_ullong nb);
+void			ft_putlong(t_ullong nb, t_uint base, const char *charset);
 
 void			ft_putchar(char c);
 
