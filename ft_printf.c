@@ -6,20 +6,21 @@
 /*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:37:09 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/10 00:23:05 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/10 16:08:03 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libprintf.h"
 
-#define FLAG "-+ 0'#"
+#define FLAG   "-+ 0#"
 #define NOSIGN "iopuxX"
 #define DOUBLE "aefgAEFG"
 
-#define MCHR 1ULL << 8 * sizeof(char) - 1
-#define MSHT 1ULL << 8 * sizeof(short) - 1
-#define MINT 1ULL << 8 * sizeof(int) - 1
-#define MLNG 0ULL + -1UL
+#define MCHR UCHAR_MAX
+#define MSHT USHRT_MAX
+#define MINT UINT_MAX
+#define MLNG ULONG_MAX
+#define MLLG ULLONG_MAX
 
 static void		flags(const char **str)
 {
@@ -90,7 +91,7 @@ static t_ulong	length(const char **str)
 	{
 		if (*(*str + 1) == 'l')
 		{
-			mask = -1ULL;
+			mask = MLLG;
 			(*str)++;
 		}
 		else

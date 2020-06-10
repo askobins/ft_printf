@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 16:15:19 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/10 16:01:09 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/10 16:09:19 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@
 # include <string.h>
 # include <stdarg.h>
 # include <unistd.h>
+# include <limits.h>
 
 # define LO 0x0101010101010101ULL
 # define HI 0x8080808080808080ULL
 
-# define B2SET "01"
-# define B10SET "0123456789"
+# define B2SET    "01"
+# define B10SET   "0123456789"
 # define B16SETLO "0123456789abcdef"
 # define B16SETHI "0123456789ABCDEF"
-
 
 typedef long long			t_llong;
 
