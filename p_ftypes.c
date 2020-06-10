@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 14:04:49 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/10 17:39:53 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/10 20:29:22 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #define MSK 0x7FFUL
 #define LOG 0.30103
 
-static void	put_precision(double nb, size_t p)
+static size_t	put_precision(double nb, size_t p)
 {
 	t_ulong	precision;
 	size_t	size;
@@ -34,9 +34,11 @@ static void	put_precision(double nb, size_t p)
 		ft_putlong(precision, 10, B10SET);
 	if (!g_flags.ext)
 		h_align(total - size, 0);
+	return ((precision || g_flags.alt) + h_numlen(precision, 10) +
+			((total - size) * !g_flags.ext));
 }
 
-size_t		p_float_normal(double nb, size_t *wp)
+static size_t	p_float_normal(double nb, size_t *wp)
 {
 	size_t	len;
 	char	sign;
@@ -45,7 +47,7 @@ size_t		p_float_normal(double nb, size_t *wp)
 		return (put_inf_nan(nb, wp[0]));
 	if (!(sign = '-' * (nb < 0)) && (g_flags.pls || g_flags.spc))
 		sign = (g_flags.pls ? '+' : ' ');
-	len = h_numlen(ft_abs(nb), 10) + wp[1] + !!(wp[1] || g_flags.alt);
+	len = h_numlen(ft_abs(nb), 10);
 	wp[0] = h_usub(wp[0], len + !!sign);
 	if (!g_flags.lft && !g_flags.zro)
 		h_align(wp[0], ' ');
@@ -54,13 +56,13 @@ size_t		p_float_normal(double nb, size_t *wp)
 	if (g_flags.zro && !g_flags.lft)
 		h_align(wp[0], '0');
 	ft_putlong(ft_abs(nb), 10, B10SET);
-	put_precision(nb, wp[1]);
+	len += put_precision(nb, wp[1]);
 	if (g_flags.lft)
 		h_align(wp[0], ' ');
 	return (wp[0] + len + !!sign);
 }
 
-size_t		p_float_scient(double nb, size_t *wp)
+static size_t	p_float_scient(double nb, size_t *wp)
 {
 	size_t	len;
 	char	e[2];
@@ -82,12 +84,26 @@ size_t		p_float_scient(double nb, size_t *wp)
 	return (len + 2 + h_numlen(exp, 10) + (ft_abs(nb) < 10));
 }
 
-
-//bounds: LOWER = 0.0001
-#define DFAC 4503599627370496
-
-
-size_t		p_float_choose(double nb, size_t *wp)
+size_t			p_ftypes(double nb, size_t *wp)
 {
-	
+	int exp;
+	t_floatlong u;
+
+
+	if (g_flags.ext)
+	{
+		u.nb = nb;
+		exp = ((int)((u.raw >> 52 & MSK) - 1023) * LOG) - (nb < 1 && nb > -1);
+		if (exp < wp[1] && exp >= -4)
+		{
+			wp[1] = h_usub(wp[1], exp + 1);
+			return (p_float_normal(nb, wp));
+		}
+		else
+		{
+			wp[1] = wp[1] ? wp[1] - 1 : 0;
+			return (p_float_scient(nb, wp));
+		}
+	}
+	return (g_flags.pre ? p_float_scient(nb, wp) : p_float_normal(nb, wp));
 }

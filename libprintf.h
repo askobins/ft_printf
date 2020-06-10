@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 16:15:19 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/10 16:09:19 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/10 19:32:45 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ typedef struct	s_flags{
 	t_uchar	spc : 1;
 	t_uchar	alt : 1;
 	t_uchar	pls : 1;
-	t_uchar	pre : 1;
 	t_uchar	cap : 1;
+	t_uchar	pre : 1;
 	t_uchar	ext : 1;
 }				t_flags;
 
@@ -92,5 +92,7 @@ size_t			p_itypes(t_llong nb, size_t *wp);
 size_t			p_char(const char c, size_t w);
 
 size_t			p_string(const char *str, size_t *wp);
+
+size_t			p_ftypes(double nb, size_t *wp);
 
 #endif
