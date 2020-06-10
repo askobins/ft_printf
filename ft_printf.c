@@ -6,7 +6,7 @@
 /*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:37:09 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/10 21:10:06 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/10 21:11:53 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static void		flags(const char **str)
 			g_flags.alt = 1;
 		else if (**str == '+')
 			g_flags.pls = 1;
+		*str++;
 	}
 }
 
