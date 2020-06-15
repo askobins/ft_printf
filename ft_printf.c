@@ -3,130 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/18 12:37:09 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/10 23:27:18 by askobins         ###   ########.fr       */
+/*   Created: 2020/06/15 00:50:05 by askobins          #+#    #+#             */
+/*   Updated: 2020/06/15 01:37:01 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libprintf.h"
 
-#define FLAG   "-+ 0#"
-#define NOSIGN "aiopuxAX"
-#define DOUBLE "efgEFG"
-#define CAPS   "AEFGX"
-
-#define MCHR UCHAR_MAX
-#define MSHT USHRT_MAX
-#define MINT UINT_MAX
-#define MLNG ULONG_MAX
-#define MLLG ULLONG_MAX
-
-static void		flags(const char **str)
+static char		*ft_strchr(const char *str, int c)
 {
-	t_flagschar	u;
-
-	u.flags = g_flags;
-	u.raw = 0;
-	while (ft_strchr(FLAG, **str))
-	{
-		if (**str == '-')
-			g_flags.lft = 1;
-		else if (**str == '0')
-			g_flags.zro = 1;
-		else if (**str == ' ')
-			g_flags.spc = 1;
-		else if (**str == '#')
-			g_flags.alt = 1;
-		else if (**str == '+')
-			g_flags.pls = 1;
-		*str++;
-	}
+	if (!str)
+		return (NULL);
+	while (*str && *str != c && (t_ullong)str & 7)
+		str++;
+	while (!is_in((t_ullong)str, c))
+		str += 8;
+	while (*str && *str != c)
+		str++;
+	return (*str == c ? (char *)str : NULL);
 }
 
-static size_t	*numbers(const char **str, va_list vars)
-{
-	size_t	wp[2];
-	size_t	*cpy;
-
-	wp[0] = 0;
-	wp[1] = 0;
-	if (**str == '*')
-	{
-		wp[0] = va_arg(vars, size_t);
-		(*str)++;
-	}
-	else
-		while (ft_isdigit(*((*str)++)))
-			wp[0] = wp[0] * 10 + (**str - '0');
-	if (g_flags.pre = (**str == '.'))
-		if (*(*str + 1) == '*')
-		{
-			wp[1] = va_arg(vars, size_t);
-			(*str)++;
-		}
-		else
-			while (ft_isdigit(*(++(*str))))
-				wp[1] = wp[1] * 10 + (**str - '0');
-	else
-		wp[1] = 6;
-	return ((cpy = wp));
-}
-
-static t_ulong	length(const char **str)
-{
-	t_ullong	mask;
-
-	mask = MINT;
-	if (**str == 'h')
-	{
-		if (*(*str + 1) == 'h')
-		{
-			mask = MCHR;
-			(*str)++;
-		}
-		else
-			mask = MSHT;
-	}
-	else if (**str == 'l')
-	{
-		if (*(*str + 1) == 'l')
-		{
-			mask = MLLG;
-			(*str)++;
-		}
-		else
-			mask = MLNG;
-	}
-	return (mask);
-}
-
-static size_t	handle(const char **str, va_list vars)
-{
-	size_t	*wp;
-	t_ulong	mask;
-
-	flags(str);
-	wp = numbers(str, vars);
-	mask = length(str);
-	if (**str == '%' && *(*str - 1) == '%')
-		return (write(1, *str, 1));
-	if (**str == 'c')
-		return (p_char(va_arg(vars, char), wp[0]));
-	if (**str == 's')
-		return (p_string(va_arg(vars, char *), wp));
-	if (**str == 'd' || **str == 'i')
-		return (p_int(va_arg(vars, t_llong), wp, mask));
-	if (ft_strchr(CAPS, **str))
-		g_flags.cap = 1;
-	if (ft_strchr(DOUBLE, **str))
-	{
-		g_flags.ext = (**str == 'g' || **str == 'G');
-		g_flags.pre = (**str == 'e' || **str == 'E');
-		return (p_float(va_arg(vars, double), wp));
-	}
-}
 
 int				ft_printf(const char *str, ...)
 {

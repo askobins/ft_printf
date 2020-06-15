@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 14:04:49 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/10 23:11:04 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/13 13:41:10 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ static size_t	put_precision(double nb, size_t p)
 		write(1, ".", 1);
 	h_align(size - (!!precision * h_numlen(precision, 10)), '0');
 	if (precision)
-		ft_putlong(precision, 10, B10SET);
-	if (!g_flags.ext)
+		ft_putlong(precision, B10SET);
+	if (!g_flags.ext || g_flags.alt)
 		h_align(total - size, 0);
 	return ((precision || g_flags.alt) + h_numlen(precision, 10) +
 			((total - size) * !g_flags.ext));
@@ -73,7 +73,7 @@ static size_t	p_float_normal(double nb, size_t *wp)
 		write(1, &sign, 1);
 	if (g_flags.zro && !g_flags.lft)
 		h_align(wp[0], '0');
-	ft_putlong(ft_abs(nb), 10, B10SET);
+	ft_putlong(ft_abs(nb), B10SET);
 	len += put_precision(nb, wp[1]);
 	if (g_flags.lft)
 		h_align(wp[0], ' ');
@@ -96,7 +96,7 @@ static size_t	p_float_scient(double nb, size_t *wp)
 	write(1, e, 2);
 	if (exp < 10)
 		write(1, "0", 1);
-	ft_putlong(exp, 10, B10SET);
+	ft_putlong(exp, B10SET);
 	return (len + 2 + h_numlen(exp, 10) + (ft_abs(nb) < 10));
 }
 

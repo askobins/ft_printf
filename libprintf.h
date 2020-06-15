@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 16:15:19 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/10 23:27:31 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/15 01:44:56 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@
 # define HI 0x8080808080808080ULL
 
 # define B2SET    "01"
+# define B8SET    "01234567"
 # define B10SET   "0123456789"
 # define B16SETLO "0123456789abcdef"
-# define B16SETHI "0123456789ABCDEF"
+# define B16SETUP "0123456789ABCDEF"
 
 typedef long long			t_llong;
 
@@ -55,18 +56,15 @@ typedef union {
 typedef union {
 	t_flags		flags;
 	t_uchar		raw;
-}	t_flagschar;
+}				t_flagschar;
 
-t_flags	g_flags;
+t_flags			g_flags;
 
 size_t			ft_strlen(const char *str); //make static if possible
 
-char			*ft_strchr(const char *str, int c); //make static? frick heck wont fit fuck the norme
-
 int				ft_isdigit(int c); //could I just remove that function altogether same problem as strchr but at least its smaller
 
-
-void			ft_putlong(t_ullong nb, t_uint base, const char *charset);
+void			ft_putlong(t_ullong nb, const char *charset);
 
 t_ullong		ft_abs(t_llong nb);
 
@@ -83,5 +81,7 @@ size_t			p_char(const char c, size_t w);
 size_t			p_string(const char *str, size_t *wp);
 
 size_t			p_float(double nb, size_t *wp);
+
+size_t			p_uint(t_ullong nb, size_t *wp, const char *charset);
 
 #endif
