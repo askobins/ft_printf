@@ -6,7 +6,7 @@
 /*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:37:09 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/15 02:48:49 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/15 03:35:41 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,23 +62,17 @@ static size_t	*numbers(const char **str, va_list vars)
 		(*str)++;
 	}
 	else
-		while (**str >= '0' && **str <= '9')
-		{
+		while (*((*str)++) ^ '0' <= 9)
 			wp[0] = wp[0] * 10 + (**str - '0');
-			str++;
-		}
 	if (g_flags.pre = (**str == '.'))
-		if (++(*str) == '*')
+		if (*++(*str) == '*')
 		{
 			wp[1] = va_arg(vars, size_t);
 			(*str)++;
 		}
 		else
-			while (ft_isdigit(**str))
-			{
+			while (*++(*str) ^ '0' <= 9)
 				wp[1] = wp[1] * 10 + (**str - '0');
-				(*str)++;
-			}
 	else
 		wp[1] = 6;
 	return (wp);
