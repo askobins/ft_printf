@@ -6,11 +6,11 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 00:50:05 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/19 00:06:00 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/19 16:33:05 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libprintf.h"
+#include "../include/libprintf.h"
 
 static char		*ft_strchr(const char *str, int c)
 {
@@ -18,7 +18,7 @@ static char		*ft_strchr(const char *str, int c)
 		return (NULL);
 	while (*str && *str != c && (t_ullong)str & 7)
 		str++;
-	while (!is_in((t_ullong)str, c))
+	while (!ft_is_in((t_ullong)str, c))
 		str += 8;
 	while (*str && *str != c)
 		str++;

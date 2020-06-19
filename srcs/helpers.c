@@ -6,11 +6,11 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/21 16:18:31 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/10 23:29:17 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/19 16:29:45 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libprintf.h"
+#include "../include/libprintf.h"
 
 void				h_align(size_t size, char c)
 {

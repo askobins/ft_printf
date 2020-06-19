@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 16:15:19 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/19 00:08:37 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/19 17:11:18 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,25 +60,29 @@ typedef union {
 
 t_flags			g_flags;
 
-size_t			ft_strlen(const char *str);
+t_ullong		ft_abs(t_llong nb);
+
+t_uint			ft_is_in(t_ullong a, char b);
 
 void			ft_putlong(t_ullong nb, const char *charset);
 
-t_ullong		ft_abs(t_llong nb);
+size_t			ft_strlen(const char *str);
 
 void			h_align(size_t size, char c);
 
-t_ullong		h_usub(t_ullong a, t_ullong b);
-
 t_uint			h_numlen(t_ullong nb, int base);
 
-size_t			p_int(t_llong nb, size_t *wp, t_ullong mask);
+t_ullong		h_usub(t_ullong a, t_ullong b);
+
+size_t			handle(const char **str, va_list vars, int nb);
 
 size_t			p_char(const char c, size_t w);
 
-size_t			p_string(const char *str, size_t *wp);
-
 size_t			p_float(double nb, size_t *wp);
+
+size_t			p_int(t_llong nb, size_t *wp, t_ullong mask);
+
+size_t			p_string(const char *str, size_t *wp);
 
 size_t			p_uint(t_ullong nb, size_t *wp, const char *charset);
 

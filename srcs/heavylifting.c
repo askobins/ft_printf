@@ -6,21 +6,16 @@
 /*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:37:09 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/19 00:01:58 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/19 16:40:52 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libprintf.h"
+#include "../include/libprintf.h"
 
-#define FLAG   "-+ 0#"
-#define NOSIGN "bopuxBX"
-#define DOUBLE "efgEFG"
-#define CAPS   "EFGX"
-
-#define FLAGBYTES   0x0000002D2B203023ULL
-#define NOSIGNBYTES 0x0000006F70757858ULL
-#define DOUBLEBYTES 0x0000656667545657ULL
-#define CAPSBYTES   0x0000000045565758ULL
+#define FLAGBYTES   0x0000002D2B203023ULL /*-+ 0#*/
+#define NOSIGNBYTES 0x0000006F70757858ULL /*bopuxBX*/
+#define DOUBLEBYTES 0x0000656667545657ULL /*efgEFG*/
+#define CAPSBYTES   0x0000000045565758ULL /*EFGX*/
 
 #define MCHR UCHAR_MAX
 #define MSHT USHRT_MAX
@@ -34,7 +29,7 @@ static void		flags(const char **str)
 
 	u.flags = g_flags;
 	u.raw = 0;
-	while (is_in(FLAGBYTES, **str))
+	while (ft_is_in(FLAGBYTES, **str))
 	{
 		if (**str == '-')
 			g_flags.lft = 1;
@@ -110,7 +105,7 @@ static size_t	cont(char p, va_list vars, size_t *wp, t_ulong mask)
 {
 	const char *set;
 
-	if (is_in(DOUBLEBYTES, p))
+	if (ft_is_in(DOUBLEBYTES, p))
 	{
 		g_flags.ext = (p == 'g' || p == 'G');
 		g_flags.pre = (p == 'e' || p == 'E');
@@ -132,7 +127,7 @@ static size_t	cont(char p, va_list vars, size_t *wp, t_ulong mask)
 	}
 }
 
-static size_t	handle(const char **str, va_list vars, int nb)
+size_t			handle(const char **str, va_list vars, int nb)
 {
 	size_t		*wp;
 	t_ulong		mask;
@@ -142,7 +137,7 @@ static size_t	handle(const char **str, va_list vars, int nb)
 	flags(str);
 	wp = numbers(str, vars);
 	mask = length(str);
-	g_flags.cap = !!(is_in(CAPSBYTES, **str));
+	g_flags.cap = !!(ft_is_in(CAPSBYTES, **str));
 	if (**str == '%' && *(*str - 1) == '%')
 		return (write(1, *str, 1));
 	else if (**str == 'c')
@@ -153,7 +148,7 @@ static size_t	handle(const char **str, va_list vars, int nb)
 		return (p_int(va_arg(vars, t_llong), wp, mask));
 	else if (**str == 'n')
 		return ((*va_arg(vars, int *) = nb) * 0);
-	else if (is_in(DOUBLEBYTES, **str) || is_in(NOSIGNBYTES, **str))
+	else if (ft_is_in(DOUBLEBYTES, **str) || ft_is_in(NOSIGNBYTES, **str))
 		return (cont(**str, vars, wp, mask));
 	else
 		return (write(1, cpy, *str - cpy));

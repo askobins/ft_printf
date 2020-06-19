@@ -6,11 +6,11 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/22 01:14:04 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/17 19:24:07 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/19 16:30:22 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libprintf.h"
+#include "../include/libprintf.h"
 
 size_t					p_int(t_llong nb, size_t *wp, t_ullong mask)
 {

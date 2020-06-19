@@ -6,14 +6,34 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 14:04:49 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/19 00:04:01 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/19 16:30:11 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libprintf.h"
+#include "../include/libprintf.h"
 
 #define MSK 0x7FFUL
 #define LOG 0.30103
+
+static size_t	put_inf_nan(double nb, size_t w)
+{
+	t_floatlong		u;
+	char			neg;
+
+	u.nb = nb;
+	neg = '-' * !!(u.raw & (1ULL << 63));
+	if (!g_flags.lft)
+		h_align(h_usub(w, 3 + !!neg), ' ');
+	if (neg)
+		write(1, &neg, 1);
+	if (nb == nb)
+		write(1, g_flags.cap ? "NAN" : "nan", 3);
+	else
+		write(1, g_flags.cap ? "INF" : "inf", 3);
+	if (g_flags.lft)
+		h_align(h_usub(w, 3 + !!neg), ' ');
+	return (w ? w : 3 + !!neg);
+}
 
 static size_t	put_precision(double nb, size_t p)
 {
@@ -36,26 +56,6 @@ static size_t	put_precision(double nb, size_t p)
 		h_align(total - size, 0);
 	return ((precision || g_flags.alt) + h_numlen(precision, 10) +
 			((total - size) * !g_flags.ext));
-}
-
-static size_t	put_inf_nan(double nb, size_t w)
-{
-	t_floatlong		u;
-	char			neg;
-
-	u.nb = nb;
-	neg = '-' * !!(u.raw & (1ULL << 63));
-	if (!g_flags.lft)
-		h_align(h_usub(w, 3 + !!neg), ' ');
-	if (neg)
-		write(1, &neg, 1);
-	if (nb == nb)
-		write(1, g_flags.cap ? "NAN" : "nan", 3);
-	else
-		write(1, g_flags.cap ? "INF" : "inf", 3);
-	if (g_flags.lft)
-		h_align(h_usub(w, 3 + !!neg), ' ');
-	return (w ? w : 3 + !!neg);
 }
 
 static size_t	p_float_normal(double nb, size_t *wp)

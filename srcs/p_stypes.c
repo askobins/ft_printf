@@ -6,11 +6,11 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/21 15:54:26 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/10 00:08:12 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/19 16:30:44 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libprintf.h"
+#include "../include/libprintf.h"
 
 size_t	p_char(char c, size_t w)
 {
