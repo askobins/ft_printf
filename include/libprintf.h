@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 16:15:19 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/19 17:11:18 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/19 18:53:41 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_ullong		ft_abs(t_llong nb);
 
 t_uint			ft_is_in(t_ullong a, char b);
 
-void			ft_putlong(t_ullong nb, const char *charset);
+void			ft_putlong(t_ullong nb, const t_uint base);
 
 size_t			ft_strlen(const char *str);
 
@@ -84,6 +84,8 @@ size_t			p_int(t_llong nb, size_t *wp, t_ullong mask);
 
 size_t			p_string(const char *str, size_t *wp);
 
-size_t			p_uint(t_ullong nb, size_t *wp, const char *charset);
+size_t			p_uint(t_ullong nb, size_t *wp, const t_uint base);
+
+int				ft_printf(const char *fmt, ...);
 
 #endif
