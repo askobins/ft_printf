@@ -58,7 +58,7 @@ static size_t	put_precision(double nb, size_t p)
 			((total - size) * !g_flags.ext));
 }
 
-static size_t	p_float_normal(double nb, size_t *wp)
+static size_t	p_float_normal(double nb, t_uint *wp)
 {
 	size_t	len;
 	char	sign;
@@ -80,7 +80,7 @@ static size_t	p_float_normal(double nb, size_t *wp)
 	return (wp[0] + len + !!sign);
 }
 
-static size_t	p_float_scient(double nb, size_t *wp)
+static size_t	p_float_scient(double nb, t_uint *wp)
 {
 	size_t		len;
 	char		e[2];
@@ -100,7 +100,7 @@ static size_t	p_float_scient(double nb, size_t *wp)
 	return (len + 2 + h_numlen(exp, 10) + (ft_abs(nb) < 10));
 }
 
-size_t			p_float(double nb, size_t *wp)
+size_t			p_float(double nb, t_uint *wp)
 {
 	int			exp;
 	t_floatlong	u;

@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 00:50:05 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/19 17:34:47 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/26 16:10:58 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ static char		*ft_strchr(const char *str, int c)
 		return (NULL);
 	while (*str && *str != c && (t_ullong)str & 7)
 		str++;
-	while (!ft_is_in((t_ullong)str, c))
+	while (!(((t_ulong)str) - LO & ~((t_ulong)str) & HI) &&
+			!((((t_ulong)str) ^ LO * (c)) - LO
+				& ~(((t_ulong)str) ^ LO * (c)) & HI))
 		str += 8;
 	while (*str && *str != c)
 		str++;
@@ -36,9 +38,12 @@ int				ft_printf(const char *fmt, ...)
 	while ((cpy = ft_strchr(fmt, '%')))
 	{
 		if (fmt != cpy)
+		{
 			ret += write(1, fmt, cpy - fmt);
+		}
 		fmt = cpy;
 		ret += handle(&fmt, vars, ret);
+		fmt++;
 	}
 	ret += ft_strlen(fmt);
 	write(1, fmt, ft_strlen(fmt));

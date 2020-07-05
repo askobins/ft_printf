@@ -6,16 +6,16 @@
 /*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:37:09 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/19 18:56:42 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/05 15:35:16 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libprintf.h"
 
-#define FLAGBYTES   0x0000002D2B203023ULL /*-+ 0#*/
-#define NOSIGNBYTES 0x0000006F70757858ULL /*bopuxBX*/
-#define DOUBLEBYTES 0x0000656667545657ULL /*efgEFG*/
-#define CAPSBYTES   0x0000000045565758ULL /*EFGX*/
+#define FLAGBYTES   0x0000002D2B203023ULL
+#define NOSIGNBYTES 0x0000006F70757858ULL
+#define DOUBLEBYTES 0x0000656667545657ULL
+#define CAPSBYTES   0x0000000045565758ULL
 
 #define MCHR UCHAR_MAX
 #define MSHT USHRT_MAX
@@ -23,12 +23,18 @@
 #define MLNG ULONG_MAX
 #define MLLG ULLONG_MAX
 
+#include <stdio.h>
+
 static void		flags(const char **str)
 {
-	t_flagschar	u;
-
-	u.flags = g_flags;
-	u.raw = 0;
+	g_flags.lft = 0;
+	g_flags.zro = 0;
+	g_flags.spc = 0;
+	g_flags.alt = 0;
+	g_flags.pls = 0;
+	g_flags.cap = 0;
+	g_flags.pre = 0;
+	g_flags.ext = 0;
 	while (ft_is_in(FLAGBYTES, **str))
 	{
 		if (**str == '-')
@@ -45,35 +51,35 @@ static void		flags(const char **str)
 	}
 }
 
-static size_t	*numbers(const char **str, va_list vars)
+static t_uint	*numbers(const char **str, va_list vars)
 {
-	static size_t	wp[2];
+	static t_uint	wp[2];
 
 	wp[0] = 0;
 	wp[1] = 0;
-	if (**str == '*')
+	if (*str != ((*str) += (**str == '*')))
 	{
-		wp[0] = va_arg(vars, size_t);
-		(*str)++;
+		g_flags.lft |= ((int)(wp[0] = va_arg(vars, int)) < 0);
+		wp[0] = ft_abs((int)wp[0]);
 	}
 	else
-		while ((*((*str)++) ^ '0') <= 9)
-			wp[0] = wp[0] * 10 + (**str - '0');
-	if ((g_flags.pre = (**str == '.')))
-		if (*++(*str) == '*')
+		while (**str >= '0' && **str <= '9')
+			wp[0] = wp[0] * 10 + (*((*str)++) - '0');
+	if (*str != (((*str) += (g_flags.pre = (**str == '.')))))
+		if (*str != ((*str) += (**str == '*')))
 		{
-			wp[1] = va_arg(vars, size_t);
-			(*str)++;
+			if ((int)(wp[1] = va_arg(vars, int)) < 0)
+				g_flags.pre = 0;
 		}
 		else
-			while ((*++(*str) ^ '0') <= 9)
-				wp[1] = wp[1] * 10 + (**str - '0');
+			while (**str >= '0' && **str <= '9')
+				wp[1] = wp[1] * 10 + (*((*str)++) - '0');
 	else
 		wp[1] = 6;
 	return (wp);
 }
 
-static t_ulong	length(const char **str)
+static t_ullong	length(const char **str)
 {
 	t_ullong	mask;
 
@@ -101,7 +107,7 @@ static t_ulong	length(const char **str)
 	return (mask);
 }
 
-static size_t	cont(char p, va_list vars, size_t *wp, t_ulong mask)
+static size_t	cont(char p, va_list vars, t_uint *wp, t_ullong mask)
 {
 	t_uint base;
 
@@ -111,33 +117,37 @@ static size_t	cont(char p, va_list vars, size_t *wp, t_ulong mask)
 		g_flags.pre = (p == 'e' || p == 'E');
 		return (p_float(va_arg(vars, double), wp));
 	}
+	if (p == 'b' || p == 'B')
+		base = 2;
+	else if (p == 'o')
+		base = 8;
+	else if (p == 'u')
+		base = 10;
 	else
+		base = 16;
+	if (p == 'p')
 	{
-		if (p == 'b' || p == 'B')
-			base = 2;
-		else if (p == 'o')
-			base = 8;
-		else if (p == 'u')
-			base = 10;
-		else
-			base = 16;
-		return (p_uint(va_arg(vars, t_ullong) & mask, wp, base));
+		g_flags.alt = 1;
+		g_flags.ext = 1;
+		mask = MLLG;
 	}
+	return (p_uint(va_arg(vars, t_ullong) & mask, wp, base));
 }
 
 size_t			handle(const char **str, va_list vars, int nb)
 {
-	size_t		*wp;
-	t_ulong		mask;
+	t_uint		*wp;
+	t_ullong	mask;
 	const char	*cpy;
 
 	cpy = *str;
+	(*str)++;
 	flags(str);
 	wp = numbers(str, vars);
 	mask = length(str);
-	g_flags.cap = !!(ft_is_in(CAPSBYTES, **str));
-	if (**str == '%' && *(*str - 1) == '%')
-		return (write(1, *str, 1));
+	g_flags.cap = ft_is_in(CAPSBYTES, **str);
+	if (**str == '%')
+		return (write(1, "%", 1));
 	else if (**str == 'c')
 		return (p_char(va_arg(vars, int), wp[0]));
 	else if (**str == 's')

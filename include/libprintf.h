@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 16:15:19 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/19 18:53:41 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/05 15:54:17 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,6 @@ typedef union {
 	t_ullong	raw;
 }				t_floatlong;
 
-typedef union {
-	t_flags		flags;
-	t_uchar		raw;
-}	t_flagschar;
-
 t_flags			g_flags;
 
 t_ullong		ft_abs(t_llong nb);
@@ -78,13 +73,13 @@ size_t			handle(const char **str, va_list vars, int nb);
 
 size_t			p_char(const char c, size_t w);
 
-size_t			p_float(double nb, size_t *wp);
+size_t			p_float(double nb, t_uint *wp);
 
-size_t			p_int(t_llong nb, size_t *wp, t_ullong mask);
+size_t			p_int(t_llong nb, t_uint *wp, t_ullong mask);
 
-size_t			p_string(const char *str, size_t *wp);
+size_t			p_string(const char *str, t_uint *wp);
 
-size_t			p_uint(t_ullong nb, size_t *wp, const t_uint base);
+size_t			p_uint(t_ullong nb, t_uint *wp, const t_uint base);
 
 int				ft_printf(const char *fmt, ...);
 

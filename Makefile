@@ -6,11 +6,11 @@
 #    By: askobins <askobins@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/19 17:21:25 by askobins          #+#    #+#              #
-#    Updated: 2020/06/19 19:11:41 by askobins         ###   ########.fr        #
+#    Updated: 2020/06/19 19:18:06 by askobins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libprintf.a
+NAME = libftprintf.a
 
 CC = clang
 

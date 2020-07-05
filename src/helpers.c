@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/21 16:18:31 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/19 18:24:35 by askobins         ###   ########.fr       */
+/*   Updated: 2020/06/28 14:50:16 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ inline t_uint		h_numlen(t_ullong nb, int base)
 {
 	t_uint		len;
 
-	len = 0;
+	len = 1;
 	while (nb /= base)
 		len++;
 	return (len);
