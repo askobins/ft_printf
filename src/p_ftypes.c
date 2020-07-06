@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 14:04:49 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/19 18:53:05 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/06 20:43:28 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #define MSK 0x7FFUL
 #define LOG 0.30103
 
-static size_t	put_inf_nan(double nb, size_t w)
+static size_t	put_inf_nan(double nb, t_uint w)
 {
 	t_floatlong		u;
 	char			neg;
@@ -35,18 +35,21 @@ static size_t	put_inf_nan(double nb, size_t w)
 	return (w ? w : 3 + !!neg);
 }
 
-static size_t	put_precision(double nb, size_t p)
+static size_t	put_precision(double nb, t_uint p)
 {
-	t_ulong	precision;
-	size_t	size;
-	size_t	total;
+	t_uint	precision;
+	t_uint	size;
+	t_uint	total;
 
 	precision = 0;
 	total = p;
 	p = p <= 16 ? p + 1 : 17;
 	size = p - 1;
 	while (--p)
-		precision = (precision * 10) + ((nb - (long)nb) * 10);
+	{
+		precision = (precision * 10) + ((nb - (int)nb) * 10);
+		nb = (nb - (int)nb) * 10;
+	}
 	if (precision || g_flags.alt)
 		write(1, ".", 1);
 	h_align(size - (!!precision * h_numlen(precision, 10)), '0');
