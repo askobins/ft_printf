@@ -6,49 +6,64 @@
 #    By: askobins <askobins@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/19 17:21:25 by askobins          #+#    #+#              #
-#    Updated: 2020/06/19 19:18:06 by askobins         ###   ########.fr        #
+#    Updated: 2020/07/06 21:51:19 by askobins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
-CC = clang
+CFLAGS = -Wall -Werror -Wextra
 
-FLAGS = -Wall -Werror -Wextra
+INC = inc/libftprintf.h
 
-INC = include/libprintf.h
+SRCDIR = src
 
-SRC = src/ft_printf.c\
-		   src/heavylifting.c\
-		   src/helpers.c\
-		   src/lft.c\
-		   src/p_ftypes.c\
-		   src/p_itypes.c\
-		   src/p_stypes.c
+OBJDIR = obj
 
-OBJ = $(SRC:.c=.o)
+OBJ = $(addprefix $(OBJDIR)/,\
+	  ft_printf.o\
+	  heavylifting.o\
+	  helpers.o\
+	  lft.o\
+	  p_ftypes.o\
+	  p_itypes.o\
+	  p_stypes.o)
 
-ACCENT = $(shell echo "\033[1;32m")
+GREEN = $(shell echo "\033[1;32m")
 
-END = $(shell echo "\033[0m")
+BLUE =  $(shell echo "\033[1;34m")
+
+BLUE2 = $(shell echo "\033[34m")
+
+END =   $(shell echo "\033[0m")
+
+vpath %.c $(SRCDIR)
 
 all: $(NAME)
 
 $(NAME): $(OBJ) $(INC)
 	@ar rcs $(NAME) $(OBJ)
-	@printf "Done!\n"
+	@printf "$(BLUE)Done!$(END)\n"
 
-%.o: %.c
-	@printf "compiling $(ACCENT)$^$(END)\n"
-	@$(CC) -c $(FLAGS) -o $@ $^
+$(OBJDIR)/%.o: %.c $(INC) $(OBJDIR)
+	@printf "$(BLUE2)compiling $(GREEN)$<$(END)\n"
+	@$(CC) -c $(CFLAGS) -o $@ $<
+
+$(OBJDIR):
+	@mkdir $(OBJDIR)
 
 clean:
-	@printf "Cleaning up\n"
-	@rm -f $(OBJ)
+	@printf "$(BLUE)Cleaning up$(END)\n"
+	@rm -rf $(OBJDIR)
 
 fclean: clean
 	@rm -f $(NAME)
 
-re: fclean all
+re:
+	@$(MAKE) fclean
+	@$(MAKE) all
+
 
 bonus: all
+
+.PHONY: all clean fclean re

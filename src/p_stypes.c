@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libprintf.h"
+#include "../inc/libftprintf.h"
 
 size_t			p_char(char c, size_t w)
 {

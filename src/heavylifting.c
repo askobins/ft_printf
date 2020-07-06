@@ -6,11 +6,11 @@
 /*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:37:09 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/05 15:35:16 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/06 21:19:00 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libprintf.h"
+#include "../inc/libftprintf.h"
 
 #define FLAGBYTES   0x0000002D2B203023ULL
 #define NOSIGNBYTES 0x0000006F70757858ULL

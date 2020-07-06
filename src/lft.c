@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libprintf.h"
+#include "../inc/libftprintf.h"
 
 inline t_ullong	ft_abs(t_llong nb)
 {

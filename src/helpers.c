@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libprintf.h"
+#include "../inc/libftprintf.h"
 
 void				h_align(size_t size, char c)
 {

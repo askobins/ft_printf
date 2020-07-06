@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libprintf.h"
+#include "../inc/libftprintf.h"
 
 size_t					p_int(t_llong nb, t_uint *wp, t_ullong mask)
 {
