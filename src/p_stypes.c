@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/21 15:54:26 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/05 14:13:24 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/06 19:30:50 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ size_t			p_char(char c, size_t w)
 	return (w ? w : 1);
 }
 
-static size_t	maxlen(const char *str, size_t max)
+static t_uint	maxlen(const char *str, t_uint max)
 {
 	const char	*cpy;
 
-	if (!str || !max)
+	if (!str || !*str || !max)
 		return (0);
 	cpy = str;
 	while ((t_ullong)cpy & 7 && cpy++ && --max)

@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/19 16:19:17 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/28 14:45:37 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/06 19:30:32 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,17 @@ void			ft_putlong(t_ullong nb, const t_uint base)
 		put_long(nb, g_flags.cap ? B16SETUP : B16SETLO, base);
 }
 
-size_t			ft_strlen(const char *str)
+t_uint			ft_strlen(const char *str)
 {
 	const char	*cpy;
 
-	if (!str)
+	if (!str || !*str)
 		return (0);
 	cpy = str;
-	while ((t_ullong)cpy & 7 && cpy++)
+	while ((t_ulong)cpy & 7 && cpy++)
 		if (!*cpy)
 			return (cpy - str);
-	while (!((((t_ullong)*cpy) - LO) & ~((t_ullong)*cpy) & HI))
+	while (!((((t_ulong)*cpy) - LO) & ~((t_ulong)*cpy) & HI))
 		cpy += 8;
 	while (*cpy)
 		cpy++;

@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 16:15:19 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/05 15:54:17 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/06 18:47:50 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_uint			ft_is_in(t_ullong a, char b);
 
 void			ft_putlong(t_ullong nb, const t_uint base);
 
-size_t			ft_strlen(const char *str);
+t_uint			ft_strlen(const char *str);
 
 void			h_align(size_t size, char c);
 

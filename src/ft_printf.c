@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 00:50:05 by askobins          #+#    #+#             */
-/*   Updated: 2020/06/26 16:10:58 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/06 01:01:17 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,12 @@ int				ft_printf(const char *fmt, ...)
 	while ((cpy = ft_strchr(fmt, '%')))
 	{
 		if (fmt != cpy)
-		{
 			ret += write(1, fmt, cpy - fmt);
-		}
 		fmt = cpy;
 		ret += handle(&fmt, vars, ret);
 		fmt++;
 	}
-	ret += ft_strlen(fmt);
-	write(1, fmt, ft_strlen(fmt));
+	ret += write(1, fmt, ft_strlen(fmt));
 	va_end(vars);
 	return (ret);
 }
