@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/22 01:14:04 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/05 15:05:41 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/07 18:25:17 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,11 @@ inline static t_uint	prefix(t_uint base)
 		return (0);
 }
 
-static size_t			putnil(size_t w)
-{
-	w = h_usub(w, 5);
-	if (!g_flags.lft)
-		h_align(w, ' ');
-	write(1, "(nil)", 5);
-	if (g_flags.lft)
-		h_align(w, ' ');
-	return (w + 5);
-}
-
 size_t					p_uint(t_ullong nb, t_uint *wp, const t_uint base)
 {
 	t_uint	len;
 	char	sign;
 
-	if (!nb && g_flags.ext)
-		return (putnil(wp[0]));
 	sign = 0;
 	if (g_flags.pls || g_flags.spc)
 		sign = g_flags.pls ? '+' : ' ';

@@ -6,7 +6,7 @@
 /*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:37:09 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/06 21:19:00 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/07 18:25:44 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ static size_t	cont(char p, va_list vars, t_uint *wp, t_ullong mask)
 	if (p == 'p')
 	{
 		g_flags.alt = 1;
-		g_flags.ext = 1;
 		mask = MLLG;
 	}
 	return (p_uint(va_arg(vars, t_ullong) & mask, wp, base));
