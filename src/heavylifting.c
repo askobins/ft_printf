@@ -6,7 +6,7 @@
 /*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:37:09 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/07 18:25:44 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/08 18:11:44 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,25 +51,28 @@ static void		flags(const char **str)
 	}
 }
 
+#include <stdio.h>
+
 static t_uint	*numbers(const char **str, va_list vars)
 {
 	static t_uint	wp[2];
 
 	wp[0] = 0;
 	wp[1] = 0;
-	if (*str != ((*str) += (**str == '*')))
+	if (**str == '*')
 	{
 		g_flags.lft |= ((int)(wp[0] = va_arg(vars, int)) < 0);
 		wp[0] = ft_abs((int)wp[0]);
+		(*str)++;
 	}
 	else
 		while (**str >= '0' && **str <= '9')
 			wp[0] = wp[0] * 10 + (*((*str)++) - '0');
-	if (*str != (((*str) += (g_flags.pre = (**str == '.')))))
-		if (*str != ((*str) += (**str == '*')))
+	if ((g_flags.pre = (**str == '.')))
+		if (*(++(*str)) == '*')
 		{
-			if ((int)(wp[1] = va_arg(vars, int)) < 0)
-				g_flags.pre = 0;
+			g_flags.pre -= ((int)(wp[1] = va_arg(vars, int)) < 0);
+			(*str)++;
 		}
 		else
 			while (**str >= '0' && **str <= '9')

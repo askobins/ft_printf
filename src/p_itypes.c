@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/22 01:14:04 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/07 18:25:17 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/08 17:34:45 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ size_t					p_int(t_llong nb, t_uint *wp, t_ullong mask)
 		ft_putlong(ft_abs(nb), 10);
 	if (g_flags.lft)
 		h_align(wp[0], ' ');
-	return (wp[0] + wp[1] + (len * !(!len && g_flags.pre)) + !!sign);
+	return (wp[0] + wp[1] + (len * !(!nb && g_flags.pre)) + !!sign);
 }
 
 inline static t_uint	prefix(t_uint base)
@@ -72,5 +72,6 @@ size_t					p_uint(t_ullong nb, t_uint *wp, const t_uint base)
 		ft_putlong(nb, base);
 	if (g_flags.lft)
 		h_align(wp[0], ' ');
-	return (wp[0] + wp[1] + (len * !(!len && g_flags.pre)) + !!sign);
+	return (wp[0] + wp[1] + (len * !(!nb && g_flags.pre)) + !!sign +
+			(g_flags.alt * ((base != 10) + (base == 2 || base == 16))));
 }
