@@ -6,7 +6,7 @@
 #    By: askobins <askobins@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/19 17:21:25 by askobins          #+#    #+#              #
-#    Updated: 2020/07/06 21:51:19 by askobins         ###   ########.fr        #
+#    Updated: 2020/07/08 19:46:12 by askobins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,18 +16,18 @@ CFLAGS = -Wall -Werror -Wextra
 
 INC = inc/libftprintf.h
 
-SRCDIR = src
+SRCDIR = src/
 
-OBJDIR = obj
+OBJDIR = obj/
 
-OBJ = $(addprefix $(OBJDIR)/,\
-	  ft_printf.o\
-	  heavylifting.o\
-	  helpers.o\
+OBJ = $(addprefix $(OBJDIR),\
 	  lft.o\
-	  p_ftypes.o\
+	  helpers.o\
+	  heavylifting.o\
+	  p_stypes.o\
 	  p_itypes.o\
-	  p_stypes.o)
+	  p_ftypes.o\
+	  ft_printf.o)
 
 GREEN = $(shell echo "\033[1;32m")
 
@@ -41,16 +41,16 @@ vpath %.c $(SRCDIR)
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(INC)
+$(NAME): $(OBJDIR) $(OBJ) $(INC)
 	@ar rcs $(NAME) $(OBJ)
 	@printf "$(BLUE)Done!$(END)\n"
 
-$(OBJDIR)/%.o: %.c $(INC) $(OBJDIR)
+$(OBJDIR)%.o: %.c $(INC)
 	@printf "$(BLUE2)compiling $(GREEN)$<$(END)\n"
 	@$(CC) -c $(CFLAGS) -o $@ $<
 
 $(OBJDIR):
-	@mkdir $(OBJDIR)
+	@mkdir -p $(OBJDIR)
 
 clean:
 	@printf "$(BLUE)Cleaning up$(END)\n"
