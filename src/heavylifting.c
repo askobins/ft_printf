@@ -6,7 +6,7 @@
 /*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:37:09 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/08 18:11:44 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/08 20:08:11 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ static void		flags(const char **str)
 		(*str)++;
 	}
 }
-
-#include <stdio.h>
 
 static t_uint	*numbers(const char **str, va_list vars)
 {

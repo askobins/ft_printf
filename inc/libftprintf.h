@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 16:15:19 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/06 21:34:33 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/13 19:14:41 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # define B10SET   "0123456789"
 # define B16SETLO "0123456789abcdef"
 # define B16SETUP "0123456789ABCDEF"
+
+# define MUL 1
+# define DIV 0
 
 typedef long long			t_llong;
 
@@ -50,7 +53,11 @@ typedef struct	s_flags{
 
 typedef union {
 	double		nb;
-	t_ullong	raw;
+	struct {
+		t_ulong	mant : 52;
+		t_uint	expo : 11;
+		t_uint	sign : 1;
+	}			raw;
 }				t_floatlong;
 
 t_flags			g_flags;
@@ -59,13 +66,19 @@ t_ullong		ft_abs(t_llong nb);
 
 t_uint			ft_is_in(t_ullong a, char b);
 
-void			ft_putlong(t_ullong nb, const t_uint base);
+t_ullong		ft_pow(t_uint mul, t_uint pow);
+
+size_t			ft_putfloat(double nb, t_uint exp, t_uint p);
+
+size_t			ft_putlong(t_ullong nb, const t_uint base);
 
 t_uint			ft_strlen(const char *str);
 
 void			h_align(size_t size, char c);
 
 t_uint			h_numlen(t_ullong nb, int base);
+
+double		h_muldiv(double nb, t_uint exp, t_uchar op);
 
 t_ullong		h_usub(t_ullong a, t_ullong b);
 

@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/19 16:19:17 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/06 19:30:32 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/13 04:08:28 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,6 @@ inline t_uint	ft_is_in(t_ullong a, char b)
 {
 	a ^= LO * b;
 	return (!!((a - LO) & ~a & HI));
-}
-
-static void		put_long(t_ullong nb, const char *set, const t_uint base)
-{
-	if (nb > base - 1)
-		put_long(nb / base, set, base);
-	write(1, &set[nb % base], 1);
-}
-
-void			ft_putlong(t_ullong nb, const t_uint base)
-{
-	if (base == 2)
-		put_long(nb, B2SET, base);
-	else if (base == 8)
-		put_long(nb, B8SET, base);
-	else if (base == 10)
-		put_long(nb, B10SET, base);
-	else if (base == 16)
-		put_long(nb, g_flags.cap ? B16SETUP : B16SETLO, base);
 }
 
 t_uint			ft_strlen(const char *str)
@@ -57,4 +38,23 @@ t_uint			ft_strlen(const char *str)
 	while (*cpy)
 		cpy++;
 	return (cpy - str);
+}
+
+t_ullong		ft_pow(t_uint mul, t_uint pow)
+{
+	t_ullong	res;
+
+	res = 1;
+	if (pow == 0)
+		return (1);
+	if (pow == 1)
+		return (mul);
+	while (pow > 0)
+	{
+		if (pow % 2)
+			res *= mul;
+		mul *= mul;
+		pow /= 2;
+	}
+	return (res);
 }
