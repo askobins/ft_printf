@@ -6,7 +6,7 @@
 /*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:37:09 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/08 20:08:11 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/14 12:49:48 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 #define MINT UINT_MAX
 #define MLNG ULONG_MAX
 #define MLLG ULLONG_MAX
-
-#include <stdio.h>
 
 static void		flags(const char **str)
 {
@@ -94,6 +92,7 @@ static t_ullong	length(const char **str)
 		}
 		else
 			mask = MSHT;
+		(*str)++;
 	}
 	else if (**str == 'l')
 	{
@@ -104,6 +103,7 @@ static t_ullong	length(const char **str)
 		}
 		else
 			mask = MLNG;
+		(*str)++;
 	}
 	return (mask);
 }

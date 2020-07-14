@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/13 02:43:55 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/13 20:05:33 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/13 20:47:44 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,12 @@ size_t			ft_putlong(t_ullong nb, const t_uint base)
 	return (h_numlen(nb, base));
 }
 
-#include <stdio.h>
 static size_t	put_precision(double nb, t_uint p)
 {
 	t_uint	tmp;
 	size_t	ret;
 
-	ret = p;
-	if (p || g_flags.alt)
+	if ((ret = p) || g_flags.alt)
 		ret += write(1, ".", 1);
 	while (p)
 	{
@@ -48,13 +46,11 @@ static size_t	put_precision(double nb, t_uint p)
 		nb += (tmp == p && (nb - (t_ullong)nb) * 10 >= 5);
 		if ((t_ullong)nb && (h_numlen((t_ullong)nb, 10) < tmp))
 			h_align(tmp - h_numlen((t_ullong)nb, 10), '0');
-		if ((t_ullong)(nb))
-		{
-			if (g_flags.ext)
-				while (!((t_ullong)nb % 10))
-					nb /= 10;
+		if (g_flags.ext)
+			while (!((t_ullong)nb % 10))
+				nb /= 10;
+		if ((t_ullong)nb)
 			ft_putlong((t_ullong)nb, 10);
-		}
 		else if (tmp != p || (!g_flags.ext || g_flags.alt))
 			h_align(tmp, '0');
 		else
@@ -64,34 +60,6 @@ static size_t	put_precision(double nb, t_uint p)
 	}
 	return (ret);
 }
-
-/*
-static size_t	put_precision(double nb, t_uint p)
-{
-	t_uint	precision;
-	t_uint	size;
-	t_uint	total;
-
-	precision = 0;
-	total = p;
-	p = p <= 16 ? p + 1 : 17;
-	size = p - 1;
-	while (--p)
-	{
-		precision = (precision * 10) + ((nb - (int)nb) * 10);
-		nb = (nb - (int)nb) * 10;
-	}
-	precision += (!p && (nb - (t_ullong)nb) * 10 >= 5);
-	if (precision || g_flags.alt)
-		write(1, ".", 1);
-	h_align(size - (!!precision * h_numlen(precision, 10)), '0');
-	if (precision)
-		ft_putlong(precision, 10);
-	if (!g_flags.ext || g_flags.alt)
-		h_align(total - size, 0);
-	return ((precision || g_flags.alt) + h_numlen(precision, 10) +
-			((total - size) * !g_flags.ext));
-}*/
 
 size_t			ft_putfloat(double nb, t_uint exp, t_uint p)
 {

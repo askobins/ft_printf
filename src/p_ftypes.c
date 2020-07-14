@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 20:00:17 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/13 20:41:43 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/13 20:48:25 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ static size_t	p_float_normal(double nb, t_uint *wp)
 		h_align(wp[0], ' ');
 	return (wp[0] + exp + wp[1] + sign + (wp[1] || g_flags.alt));
 }
-
 
 static size_t	p_float_scient(double nb, t_uint *wp)
 {

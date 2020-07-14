@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 16:15:19 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/13 19:14:41 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/13 20:48:46 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void			h_align(size_t size, char c);
 
 t_uint			h_numlen(t_ullong nb, int base);
 
-double		h_muldiv(double nb, t_uint exp, t_uchar op);
+double			h_muldiv(double nb, t_uint exp, t_uchar op);
 
 t_ullong		h_usub(t_ullong a, t_ullong b);
 

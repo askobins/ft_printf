@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/21 16:18:31 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/13 19:14:55 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/13 20:45:08 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ inline t_ullong		h_usub(t_ullong a, t_ullong b)
 	return ((a - b) * (a > b));
 }
 
-double			h_muldiv(double nb, t_uint pow, t_uchar op)
+double				h_muldiv(double nb, t_uint pow, t_uchar op)
 {
 	if (!pow)
 		return (nb);
