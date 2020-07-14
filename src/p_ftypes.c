@@ -6,11 +6,11 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 20:00:17 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/13 20:48:25 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/14 19:26:46 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libftprintf.h"
+#include "libftprintf.h"
 
 #define LOG 0.30103
 
@@ -56,7 +56,7 @@ static size_t	p_float_normal(double nb, t_uint *wp)
 	wp[1] = ft_putfloat(u.nb, exp, wp[1]);
 	if (g_flags.lft)
 		h_align(wp[0], ' ');
-	return (wp[0] + exp + wp[1] + sign + (wp[1] || g_flags.alt));
+	return (wp[0] + wp[1] + !!sign);
 }
 
 static size_t	p_float_scient(double nb, t_uint *wp)
@@ -78,7 +78,7 @@ static size_t	p_float_scient(double nb, t_uint *wp)
 	if (exp < 10)
 		write(1, "0", 1);
 	ft_putlong(exp, 10);
-	return (len + 2 + h_numlen(exp, 10) + (nb < 10 && nb > -10));
+	return (len + 2 + h_numlen(exp, 10) + (exp < 9));
 }
 
 size_t			p_float(double nb, t_uint *wp)

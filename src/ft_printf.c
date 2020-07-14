@@ -6,11 +6,11 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 00:50:05 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/06 21:11:26 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/14 18:57:35 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libftprintf.h"
+#include "libftprintf.h"
 
 static char		*ft_strchr(const char *str, int c)
 {

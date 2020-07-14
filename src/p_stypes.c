@@ -6,11 +6,11 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/21 15:54:26 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/06 19:30:50 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/14 18:58:25 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libftprintf.h"
+#include "libftprintf.h"
 
 size_t			p_char(char c, size_t w)
 {
@@ -44,17 +44,13 @@ static t_uint	maxlen(const char *str, t_uint max)
 
 size_t			p_string(const char *str, t_uint *wp)
 {
-	if (str)
-		wp[1] = g_flags.pre ? maxlen(str, wp[1]) : ft_strlen(str);
-	else
-		wp[1] = wp[1] >= 6 ? 6 : 0;
+	str = str ? str : "(null)";
+	wp[1] = g_flags.pre ? maxlen(str, wp[1]) : ft_strlen(str);
 	wp[0] = h_usub(wp[0], wp[1]);
 	if (!g_flags.lft)
 		h_align(wp[0], ' ');
-	if (str && *str)
+	if (*str)
 		write(1, str, wp[1]);
-	else if (!str && (!g_flags.pre || wp[1]))
-		write(1, "(null)", 6);
 	if (g_flags.lft)
 		h_align(wp[0], ' ');
 	return (wp[0] + wp[1]);

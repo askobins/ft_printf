@@ -6,11 +6,11 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/13 02:43:55 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/13 20:47:44 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/14 19:28:35 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libftprintf.h"
+#include "libftprintf.h"
 
 static void		put_long(t_ullong nb, const char *set, const t_uint base)
 {
@@ -66,7 +66,7 @@ size_t			ft_putfloat(double nb, t_uint exp, t_uint p)
 	if (nb <= (double)ULLONG_MAX)
 	{
 		ft_putlong((t_ullong)nb, 10);
-		return (exp + put_precision(nb - (long)nb, p));
+		return (h_numlen((t_ullong)nb, 10) + put_precision(nb - (long)nb, p));
 	}
 	h_align(exp + 1, '0');
 	return (exp + put_precision(nb, p));

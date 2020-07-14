@@ -6,11 +6,11 @@
 /*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:37:09 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/14 12:49:48 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/14 18:56:56 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libftprintf.h"
+#include "libftprintf.h"
 
 #define FLAGBYTES   0x0000002D2B203023ULL
 #define NOSIGNBYTES 0x0000006F70757858ULL
@@ -80,32 +80,24 @@ static t_uint	*numbers(const char **str, va_list vars)
 
 static t_ullong	length(const char **str)
 {
-	t_ullong	mask;
-
-	mask = MINT;
 	if (**str == 'h')
-	{
-		if (*(*str + 1) == 'h')
+		if (*(++(*str)) == 'h')
 		{
-			mask = MCHR;
 			(*str)++;
+			return (MCHR);
 		}
 		else
-			mask = MSHT;
-		(*str)++;
-	}
+			return (MSHT);
 	else if (**str == 'l')
-	{
-		if (*(*str + 1) == 'l')
+		if (*(++(*str)) == 'l')
 		{
-			mask = MLLG;
 			(*str)++;
+			return (MLLG);
 		}
 		else
-			mask = MLNG;
-		(*str)++;
-	}
-	return (mask);
+			return (MLNG);
+	else
+		return (MINT);
 }
 
 static size_t	cont(char p, va_list vars, t_uint *wp, t_ullong mask)
@@ -146,16 +138,14 @@ size_t			handle(const char **str, va_list vars, int nb)
 	wp = numbers(str, vars);
 	mask = length(str);
 	g_flags.cap = ft_is_in(CAPSBYTES, **str);
-	if (**str == '%')
-		return (write(1, "%", 1));
-	else if (**str == 'c')
-		return (p_char(va_arg(vars, int), wp[0]));
-	else if (**str == 's')
+	if (**str == 's')
 		return (p_string(va_arg(vars, char *), wp));
-	else if (**str == 'd' || **str == 'i')
-		return (p_int(va_arg(vars, t_llong), wp, mask));
 	else if (**str == 'n')
 		return ((*va_arg(vars, int *) = nb) * 0);
+	else if (**str == 'c' || **str == '%')
+		return (p_char(**str == '%' ? '%' : va_arg(vars, int), wp[0]));
+	else if (**str == 'd' || **str == 'i')
+		return (p_int(va_arg(vars, t_llong), wp, mask));
 	else if (ft_is_in(DOUBLEBYTES, **str) || ft_is_in(NOSIGNBYTES, **str))
 		return (cont(**str, vars, wp, mask));
 	else

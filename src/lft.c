@@ -6,11 +6,11 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/19 16:19:17 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/13 04:08:28 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/14 18:57:54 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libftprintf.h"
+#include "libftprintf.h"
 
 inline t_ullong	ft_abs(t_llong nb)
 {

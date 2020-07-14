@@ -6,7 +6,7 @@
 #    By: askobins <askobins@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/19 17:21:25 by askobins          #+#    #+#              #
-#    Updated: 2020/07/14 01:11:08 by askobins         ###   ########.fr        #
+#    Updated: 2020/07/14 14:59:39 by askobins         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ OBJDIR = obj/
 
 OBJ = $(addprefix $(OBJDIR), $(addsuffix .o, $(FILES)))
 
-CFLAGS = -Wall -Werror -Wextra -I $(INCDIR)
+FLAGS = -Wall -Werror -Wextra -I $(INCDIR)
 
 GREEN = $(shell echo "\033[1;32m")
 

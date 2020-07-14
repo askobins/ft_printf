@@ -6,11 +6,11 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/21 16:18:31 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/13 20:45:08 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/14 18:57:46 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libftprintf.h"
+#include "libftprintf.h"
 
 #define LONG 10e100
 #define PMAX 10000000000000000000UL
