@@ -6,14 +6,14 @@
 /*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:37:09 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/14 18:56:56 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/15 20:34:46 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
 #define FLAGBYTES   0x0000002D2B203023ULL
-#define NOSIGNBYTES 0x0000006F70757858ULL
+#define NOSIGNBYTES 0x0062426F70757858ULL
 #define DOUBLEBYTES 0x0000656667545657ULL
 #define CAPSBYTES   0x0000000045565758ULL
 
@@ -68,6 +68,7 @@ static t_uint	*numbers(const char **str, va_list vars)
 		if (*(++(*str)) == '*')
 		{
 			g_flags.pre -= ((int)(wp[1] = va_arg(vars, int)) < 0);
+			wp[1] = g_flags.pre ? wp[1] : 6;
 			(*str)++;
 		}
 		else

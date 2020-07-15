@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/22 01:14:04 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/14 18:58:18 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/15 23:36:02 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ size_t					p_uint(t_ullong nb, t_uint *wp, const t_uint base)
 	sign = 0;
 	if (g_flags.pls || g_flags.spc)
 		sign = g_flags.pls ? '+' : ' ';
-	len = (nb || g_flags.pre) ? h_numlen(nb, base) : 0;
+	len = (nb || !g_flags.pre) ? h_numlen(nb, base) : 0;
 	wp[1] = g_flags.pre ? h_usub(wp[1], len * !!nb) :
 		(g_flags.zro && !g_flags.lft) * h_usub(wp[0], len + !!sign);
 	wp[0] = h_usub(wp[0], wp[1] + !!sign + (len * !(g_flags.pre && !nb)));
