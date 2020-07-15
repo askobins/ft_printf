@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 20:00:17 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/14 19:26:46 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/16 01:32:41 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ size_t			p_float(double nb, t_uint *wp)
 	int			exp;
 	t_floatlong	u;
 
+	if (!g_flags.pre)
+		wp[1] = 6;
 	u.nb = nb;
 	if (nb != nb || u.raw.expo == 2048)
 		return (put_inf_nan(nb, wp[0]));

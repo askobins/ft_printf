@@ -6,7 +6,7 @@
 /*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:37:09 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/15 20:34:46 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/16 01:33:52 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,25 +57,24 @@ static t_uint	*numbers(const char **str, va_list vars)
 	wp[1] = 0;
 	if (**str == '*')
 	{
+		(*str)++;
 		g_flags.lft |= ((int)(wp[0] = va_arg(vars, int)) < 0);
 		wp[0] = ft_abs((int)wp[0]);
-		(*str)++;
 	}
 	else
 		while (**str >= '0' && **str <= '9')
 			wp[0] = wp[0] * 10 + (*((*str)++) - '0');
 	if ((g_flags.pre = (**str == '.')))
+	{
 		if (*(++(*str)) == '*')
 		{
-			g_flags.pre -= ((int)(wp[1] = va_arg(vars, int)) < 0);
-			wp[1] = g_flags.pre ? wp[1] : 6;
 			(*str)++;
+			g_flags.pre -= ((int)(wp[1] = va_arg(vars, int)) < 0);
 		}
 		else
 			while (**str >= '0' && **str <= '9')
 				wp[1] = wp[1] * 10 + (*((*str)++) - '0');
-	else
-		wp[1] = 6;
+	}
 	return (wp);
 }
 
@@ -108,7 +107,7 @@ static size_t	cont(char p, va_list vars, t_uint *wp, t_ullong mask)
 	if (ft_is_in(DOUBLEBYTES, p))
 	{
 		g_flags.ext = (p == 'g' || p == 'G');
-		g_flags.pre = (p == 'e' || p == 'E');
+		g_flags.alt = (p == 'e' || p == 'E');
 		return (p_float(va_arg(vars, double), wp));
 	}
 	if (p == 'b' || p == 'B')
