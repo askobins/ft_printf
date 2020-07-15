@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/21 15:54:26 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/14 18:58:25 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/16 00:04:43 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 size_t			p_char(char c, size_t w)
 {
 	if (w && !g_flags.lft)
-		h_align(w - 1, ' ');
+		h_align(w - 1, g_flags.zro ? '0' : ' ');
 	write(1, &c, 1);
 	if (w && g_flags.lft)
 		h_align(w - 1, ' ');
@@ -48,7 +48,7 @@ size_t			p_string(const char *str, t_uint *wp)
 	wp[1] = g_flags.pre ? maxlen(str, wp[1]) : ft_strlen(str);
 	wp[0] = h_usub(wp[0], wp[1]);
 	if (!g_flags.lft)
-		h_align(wp[0], ' ');
+		h_align(wp[0], g_flags.zro ? '0' : ' ');
 	if (*str)
 		write(1, str, wp[1]);
 	if (g_flags.lft)
