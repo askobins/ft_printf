@@ -6,7 +6,7 @@
 /*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:37:09 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/16 01:33:52 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/17 02:51:49 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,20 +84,20 @@ static t_ullong	length(const char **str)
 		if (*(++(*str)) == 'h')
 		{
 			(*str)++;
-			return (MCHR);
+			return ((t_ullong)MCHR);
 		}
 		else
-			return (MSHT);
+			return ((t_ullong)MSHT);
 	else if (**str == 'l')
 		if (*(++(*str)) == 'l')
 		{
 			(*str)++;
-			return (MLLG);
+			return ((t_ullong)MLLG);
 		}
 		else
-			return (MLNG);
+			return ((t_ullong)MLNG);
 	else
-		return (MINT);
+		return ((t_ullong)MINT);
 }
 
 static size_t	cont(char p, va_list vars, t_uint *wp, t_ullong mask)
@@ -145,7 +145,7 @@ size_t			handle(const char **str, va_list vars, int nb)
 	else if (**str == 'c' || **str == '%')
 		return (p_char(**str == '%' ? '%' : va_arg(vars, int), wp[0]));
 	else if (**str == 'd' || **str == 'i')
-		return (p_int(va_arg(vars, t_llong), wp, mask));
+		return (p_int(va_arg(vars, t_ullong), wp, mask));
 	else if (ft_is_in(DOUBLEBYTES, **str) || ft_is_in(NOSIGNBYTES, **str))
 		return (cont(**str, vars, wp, mask));
 	else

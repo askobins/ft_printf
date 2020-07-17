@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/22 01:14:04 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/15 23:36:02 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/17 04:02:21 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t					p_int(t_llong nb, t_uint *wp, t_ullong mask)
 	t_uint	len;
 	char	sign;
 
-	nb = (t_ullong)nb > mask / 2 ? nb | ~mask : nb & mask;
+	nb = (t_ullong)nb & (mask + 1) / 2 ? nb | ~mask : nb & mask;
 	if (!(sign = '-' * (nb < 0)) && (g_flags.pls || g_flags.spc))
 		sign = g_flags.pls ? '+' : ' ';
 	len = (nb || !g_flags.pre) ? h_numlen(ft_abs(nb), 10) : 0;
