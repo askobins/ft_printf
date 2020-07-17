@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/22 01:14:04 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/17 04:02:21 by askobins         ###   ########.fr       */
+/*   Updated: 2020/07/17 14:51:18 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ size_t					p_int(t_llong nb, t_uint *wp, t_ullong mask)
 	if (!(sign = '-' * (nb < 0)) && (g_flags.pls || g_flags.spc))
 		sign = g_flags.pls ? '+' : ' ';
 	len = (nb || !g_flags.pre) ? h_numlen(ft_abs(nb), 10) : 0;
-	wp[1] = g_flags.pre && wp[1] ? h_usub(wp[1], len * !!nb) :
+	wp[1] = g_flags.pre ? h_usub(wp[1], len * !!nb) :
 		(g_flags.zro && !g_flags.lft) * h_usub(wp[0], len + !!sign);
 	wp[0] = h_usub(wp[0], wp[1] + !!sign + (len * !(g_flags.pre && !nb)));
 	if (!g_flags.lft && (!g_flags.zro || g_flags.pre))
