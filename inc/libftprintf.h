@@ -6,7 +6,7 @@
 /*   By: askobins <askobins@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 16:15:19 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/16 01:34:46 by askobins         ###   ########.fr       */
+/*   Updated: 2020/08/12 16:45:15 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,27 @@ typedef unsigned long		t_ulong;
 
 typedef unsigned long long	t_ullong;
 
-typedef struct	s_flags{
-	t_uchar	lft : 1;
-	t_uchar	zro : 1;
-	t_uchar	spc : 1;
-	t_uchar	pls : 1;
-	t_uchar	cap : 1;
-	t_uchar	pre : 1;
-	t_uchar	alt : 1;
-	t_uchar	ext : 1;
+typedef struct	s_flags
+{
+	union
+	{
+		t_uchar			val;
+		struct
+		{
+			unsigned	lft : 1;
+			unsigned	zro : 1;
+			unsigned	spc : 1;
+			unsigned	pls : 1;
+			unsigned	cap : 1;
+			unsigned	pre : 1;
+			unsigned	alt : 1;
+			unsigned	ext : 1;
+		};
+	};
 }				t_flags;
 
-typedef union {
+typedef union
+{
 	double		nb;
 	struct {
 		t_ulong	mant : 52;

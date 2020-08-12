@@ -6,7 +6,7 @@
 /*   By: askobins <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 12:37:09 by askobins          #+#    #+#             */
-/*   Updated: 2020/07/17 02:51:49 by askobins         ###   ########.fr       */
+/*   Updated: 2020/08/12 16:45:57 by askobins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,7 @@
 
 static void		flags(const char **str)
 {
-	g_flags.lft = 0;
-	g_flags.zro = 0;
-	g_flags.spc = 0;
-	g_flags.alt = 0;
-	g_flags.pls = 0;
-	g_flags.cap = 0;
-	g_flags.pre = 0;
-	g_flags.ext = 0;
+	g_flags.val = 0;
 	while (ft_is_in(FLAGBYTES, **str))
 	{
 		if (**str == '-')
